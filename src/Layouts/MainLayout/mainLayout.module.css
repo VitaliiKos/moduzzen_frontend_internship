@@ -1,0 +1,56 @@
+.wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+
+    text-align: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.menu {
+    background: linear-gradient(135deg, #012714, #73d7ce 46%, #2ec4b6 50%, #20897f 53%, #b8ebe6 76%, #2ec4b6 87%, #1b1b1b);
+
+    min-height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    position: fixed;
+    z-index: 3;
+}
+
+.menu a {
+    color: gold;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.content {
+    width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    margin-top: 60px;
+}
+
+.menu a[class='active'] {
+    text-decoration: none;
+    color: red;
+}
+
+.footer {
+    min-height: 40px;
+    background-color: #282c34;
+    display: flex;
+    justify-content: center;
+    padding-right: 28px;
+    font-weight: 600;
+    font-size: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    z-index: 2;
+    color: gold;
+}
