@@ -10,7 +10,8 @@ const initialState: IState = {
 const mainSlice = createSlice({
     name: 'mainSlice',
     initialState,
-    reducers: {}
+    reducers: {},
+    extraReducers:builder =>builder
 })
 
 const {reducer:mainReducer, actions} = mainSlice;
