@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import {Outlet} from 'react-router-dom';
-import {Company} from '../../Components/Company/Company';
 
+import {Company} from '../../Components/Company/Company';
 import {companies} from '../../temporaryData';
 import css from './companiesListPage.module.css';
 

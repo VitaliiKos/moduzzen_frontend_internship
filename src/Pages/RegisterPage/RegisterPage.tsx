@@ -1,9 +1,11 @@
 import {FC, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
+import {handleChange} from '../../utils';
 import {FormInput} from '../../Components';
 import {IUser} from '../../interfaces/user.inteface';
-import { RouterEndpoints } from '../../routes';
+import {RouterEndpoints} from '../../routes';
+import {ILoginUser} from '../../interfaces';
 
 const RegisterPage: FC = () => {
 
@@ -18,20 +20,13 @@ const RegisterPage: FC = () => {
     }
 
     const navigate = useNavigate();
-    const [user, setUser] = useState(defaultUser);
+    const [data, setData] = useState(defaultUser);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = event.target;
-        setUser((prevUser) => ({
-            ...prevUser,
-            ...prevUser,
-            [name]: value
-        }));
-    };
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => handleChange(event, setData as React.Dispatch<React.SetStateAction<IUser | ILoginUser>>);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setUser(defaultUser)
+        setData(defaultUser)
         navigate(`/${RouterEndpoints.authorization}`)
     };
 
@@ -39,12 +34,12 @@ const RegisterPage: FC = () => {
         <div>
             <h3>RegisterPage</h3>
             <form onSubmit={handleSubmit}>
-                <FormInput name="username" value={user.username} onChange={handleInputChange}/>
-                <FormInput name="email" value={user.email} onChange={handleInputChange}/>
-                <FormInput name="password" value={user.password} onChange={handleInputChange} type="password"/>
-                <FormInput name="city" value={user.city} onChange={handleInputChange}/>
-                <FormInput name="street" value={user.street} onChange={handleInputChange}/>
-                <FormInput name="phone" value={user.phone} onChange={handleInputChange}/>
+                <FormInput name="username" value={data.username} onChange={handleInputChange}/>
+                <FormInput name="email" value={data.email} onChange={handleInputChange}/>
+                <FormInput name="password" value={data.password} onChange={handleInputChange} type="password"/>
+                <FormInput name="city" value={data.city} onChange={handleInputChange}/>
+                <FormInput name="street" value={data.street} onChange={handleInputChange}/>
+                <FormInput name="phone" value={data.phone} onChange={handleInputChange}/>
                 <button type="submit">Register</button>
             </form>
 

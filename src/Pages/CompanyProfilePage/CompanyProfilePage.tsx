@@ -1,17 +1,21 @@
 import {FC} from 'react';
 import {useParams} from 'react-router-dom';
+
 import {ButtonNavigate} from '../../Components';
 import {companies, ITemporaryCompany} from '../../temporaryData';
 
 const CompanyProfilePage: FC = () => {
 
-    const {id} = useParams();
-    const currentCompany: ITemporaryCompany | undefined = companies.find(company => company.id === Number(id))
+        const {id} = useParams();
+        const currentCompany: ITemporaryCompany | undefined = companies.find(company => company.id === Number(id))
 
-    return (
-        <div>
-            {
-                currentCompany &&
+        if (!currentCompany) {
+            return (
+                <div>Company not found.</div>
+            );
+        }
+        return (
+            <div>
                 <div>
                     <ButtonNavigate navigate_params={'/company'}/>
                     <h3>{currentCompany.id}. {currentCompany.name}</h3>
@@ -20,10 +24,10 @@ const CompanyProfilePage: FC = () => {
                     <h3>{currentCompany.city}</h3>
                     <h3>{currentCompany.street}</h3>
                 </div>
-            }
-
-        </div>
-    );
-};
+            </div>
+        )
+            ;
+    }
+;
 
 export {CompanyProfilePage};

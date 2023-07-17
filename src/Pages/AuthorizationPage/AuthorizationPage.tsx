@@ -1,30 +1,25 @@
 import {FC, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import {FormInput} from '../../Components';
-import { RouterEndpoints } from '../../routes';
+import {ILoginUser} from '../../interfaces';
+import {RouterEndpoints} from '../../routes';
+import { handleChange } from '../../utils';
 
 const AuthorizationPage: FC = () => {
 
-    const initialValue = {
+    const initialValue: ILoginUser = {
         email: '',
         password: '',
     }
     const navigate = useNavigate();
-    const [user, setUser] = useState(initialValue);
+    const [data, setData] = useState(initialValue);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = event.target;
-        setUser((prevUser) => ({
-            ...prevUser,
-            ...prevUser,
-            [name]: value
-        }));
-    };
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => handleChange(event, setData);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setUser(initialValue)
+        setData(initialValue)
         navigate(`/${RouterEndpoints.users}`)
     };
 
@@ -32,8 +27,8 @@ const AuthorizationPage: FC = () => {
         <div>
             <h3>AuthorizationPage</h3>
             <form onSubmit={handleSubmit}>
-                <FormInput name="email" value={user.email} onChange={handleInputChange}/>
-                <FormInput name="password" value={user.password} onChange={handleInputChange} type="password"/>
+                <FormInput name="email" value={data.email} onChange={handleInputChange}/>
+                <FormInput name="password" value={data.password} onChange={handleInputChange} type="password"/>
                 <button type="submit">Login</button>
             </form>
 

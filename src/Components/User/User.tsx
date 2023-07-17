@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
-import {ButtonDetail} from '..';
 
+import {ButtonDetail} from '..';
 import {ITemporaryUser} from '../../temporaryData';
 import css from './user.module.css';
 

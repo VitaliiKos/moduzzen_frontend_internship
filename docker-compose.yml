@@ -6,7 +6,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "${REACT_APP_NGINX_PORT}:${REACT_APP_DOCKER_PORT}"
-
     env_file:
       - .env
     volumes:
