@@ -6,9 +6,11 @@
 
 3. Open a terminal or command prompt and navigate to the root directory of the project where the docker-compose.yml file is located.
 
-4 Run the following command to build and run the container:
+4. In the first terminal, run the following command for watching file trees:
+    ### npm run watch
 
-### docker-compose up
+5. In another terminal, run the following command to build and run the container:
+    ### docker-compose up --build
 
 This command will build and run containers according to the settings in the docker-compose.yml file.
 
