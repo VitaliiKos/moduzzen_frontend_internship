@@ -5,7 +5,6 @@ import {handleChange} from '../../utils';
 import {FormInput} from '../../Components';
 import {IUser} from '../../interfaces/user.inteface';
 import {RouterEndpoints} from '../../routes';
-import {ILoginUser} from '../../interfaces';
 
 const RegisterPage: FC = () => {
 
@@ -20,9 +19,11 @@ const RegisterPage: FC = () => {
     }
 
     const navigate = useNavigate();
-    const [data, setData] = useState(defaultUser);
+    const [data, setData] = useState<IUser>(defaultUser);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => handleChange(event, setData as React.Dispatch<React.SetStateAction<IUser | ILoginUser>>);
+    const handleInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>) =>
+        handleChange<IUser>(event, setData);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

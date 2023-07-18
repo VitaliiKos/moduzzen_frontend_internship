@@ -13,9 +13,11 @@ const AuthorizationPage: FC = () => {
         password: '',
     }
     const navigate = useNavigate();
-    const [data, setData] = useState(initialValue);
+    const [data, setData] = useState<ILoginUser>(initialValue);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => handleChange(event, setData);
+    const handleInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>) =>
+        handleChange<ILoginUser>(event, setData);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

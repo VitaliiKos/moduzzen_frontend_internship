@@ -1,9 +1,7 @@
-import {Dispatch, SetStateAction} from "react";
+import {IUseState} from "../types";
 
-import {ILoginUser, IUser} from "../interfaces";
 
-type SetDataAction = Dispatch<SetStateAction<IUser | ILoginUser>>;
-const handleChange = (event: React.ChangeEvent<HTMLInputElement>, setData: SetDataAction) => {
+const handleChange = <T extends Record<string, any>>(event: React.ChangeEvent<HTMLInputElement>, setData: IUseState<T>) => {
     const {name, value} = event.target;
     setData((prevData) => ({
         ...prevData,

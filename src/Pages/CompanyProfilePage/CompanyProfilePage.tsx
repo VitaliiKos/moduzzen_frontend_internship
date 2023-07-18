@@ -16,17 +16,14 @@ const CompanyProfilePage: FC = () => {
         }
         return (
             <div>
-                <div>
-                    <ButtonNavigate navigate_params={'/company'}/>
-                    <h3>{currentCompany.id}. {currentCompany.name}</h3>
-                    <h3>{currentCompany.email}</h3>
-                    <h3>{currentCompany.phone}</h3>
-                    <h3>{currentCompany.city}</h3>
-                    <h3>{currentCompany.street}</h3>
-                </div>
+                <ButtonNavigate navigate_params={'/company'}/>
+                <h3>{currentCompany.id}. {currentCompany.name}</h3>
+                <h3>{currentCompany.email}</h3>
+                <h3>{currentCompany.phone}</h3>
+                <h3>{currentCompany.city}</h3>
+                <h3>{currentCompany.street}</h3>
             </div>
-        )
-            ;
+        );
     }
 ;
 
