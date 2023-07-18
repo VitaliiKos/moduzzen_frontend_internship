@@ -1,0 +1,14 @@
+.userListWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.userListTitle{
+    width: 100%;
+}
+.userList{
+    width: 40%;
+}
+.currentUserWrapper{
+    width: 55%;
+}

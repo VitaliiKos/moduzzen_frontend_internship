@@ -23,7 +23,7 @@ COPY --from=builder /app/build /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 # We indicate on which port Nginx will work
-EXPOSE `${REACT_APP_NGINX_PORT}`
+EXPOSE "${REACT_APP_NGINX_PORT}"
 
 # The command to run Nginx
 CMD ["nginx", "-g", "daemon off;"]

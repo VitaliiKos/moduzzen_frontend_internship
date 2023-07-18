@@ -1,0 +1,15 @@
+
+.companyListWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.companyListTitle{
+    width: 100%;
+}
+.companyList{
+    width: 40%;
+}
+.currentCompanyWrapper{
+    width: 55%;
+}

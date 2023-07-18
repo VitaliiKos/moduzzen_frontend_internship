@@ -1,0 +1,6 @@
+.companyWrapper{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+
+}
