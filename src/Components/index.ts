@@ -6,3 +6,5 @@ export * from './Header/Header';
 export * from './UniversalModalWindow/UniversalModalWindow';
 export * from './User/User';
 export * from './ButtonNavigate/ButtonNavigate';
+export  * from './Increment/Increment';
+export * from './ChangeString/ChangeString';

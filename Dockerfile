@@ -1,29 +1,19 @@
-# We use the basic Node.js image to build the application
-FROM node:18.16-alpine AS builder
+# pull the base image
+FROM node:18.16-alpine
 
+# set the working direction
 WORKDIR /app
 
 # Copy the dependency files and install them
-COPY package.json /app/package.json
+COPY package.json ./
+
 RUN yarn install
 
-# Copy all the source code of the application
-COPY . /app
+# add app
+COPY . .
 
-# Collecting the application
-RUN yarn build
-
-# We use the base image of Nginx to launch the application
-FROM nginx:alpine
-
-# Copy the compiled application to Nginx
-COPY --from=builder /app/build /usr/share/nginx/html
-
-# Copy Nginx settings
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+# start app
+CMD ["yarn", "start"]
 
 # We indicate on which port Nginx will work
-EXPOSE "${REACT_APP_NGINX_PORT}"
-
-# The command to run Nginx
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE "${REACT_APP_API_PORT}"
