@@ -8,8 +8,7 @@ interface IProps {
     placeholder?: string;
 }
 
-const FormInput: FC<IProps> = ({name = '', value, onChange, type = 'text', placeholder = ''}) => {
-
+const FormInput: FC<IProps> = ({name = '', value = '', onChange, type = 'text', placeholder = ''}) => {
     return (
         <div>
             <label>
