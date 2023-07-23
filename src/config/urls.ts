@@ -1,9 +1,21 @@
-import {REACT_APP_API_HOST, REACT_APP_API_PORT} from '../env';
+import {REACT_APP_BACKEND_HOST, REACT_APP_BACKEND_PORT} from '../env';
 
 
-const baseURL = `${REACT_APP_API_HOST}:${REACT_APP_API_PORT}`
+const baseURL = `${REACT_APP_BACKEND_HOST}:${REACT_APP_BACKEND_PORT}`
 
-const mainUrls = {}
+const healthCheck = '/'
+const users = '/users'
+const mainUrls = {
+    healthCheck:{
+        healthCheck
+    },
+    baseStatus:{
+        baseStatus:'/base_status'
+    },
+    users:{
+        users,
+    }
+}
 
 export {
     baseURL,
