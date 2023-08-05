@@ -1,20 +1,18 @@
-import {FC, ChangeEvent} from 'react';
+import {FC} from 'react';
+
 
 interface IProps {
     name: string;
-    value: string;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     type?: string;
-    placeholder?: string;
+    register?: any;
 }
 
-const FormInput: FC<IProps> = ({name = '', value = '', onChange, type = 'text', placeholder = ''}) => {
+const FormInput: FC<IProps> = ({name = '', type = 'text', register}) => {
     return (
         <div>
-            <label>
-                <input type={type} name={name} value={value} onChange={onChange} placeholder={name}/>
-            </label>
-
+                <label>
+                    <input type={type} name={name} placeholder={name} {...register(name)}/>
+                </label>
         </div>
     );
 };

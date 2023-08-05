@@ -1,29 +1,30 @@
 import {FC} from 'react';
-import {useParams} from 'react-router-dom';
+import {useAppSelector} from '../../hooks';
 
-import {ButtonNavigate} from '../../Components';
-import {ITemporaryUser, users} from '../../temporaryData';
+import css from './userProfilePage.module.css'
 
 const UserProfilePage: FC = () => {
-
-    const {id} = useParams();
-    const currentUsers: ITemporaryUser | undefined = users.find(user => user.id === Number(id))
-
-    if (!currentUsers) {
-        return (
-            <div>User not found.</div>
-        );
-    }
-
+    const {me} = useAppSelector(state => state.authReducer);
 
     return (
         <div>
-            <ButtonNavigate navigate_params={'/users'}/>
-            <h3>{currentUsers.id}. {currentUsers.username}</h3>
-            <h3>{currentUsers.email}</h3>
-            <h3>{currentUsers.phone}</h3>
-            <h3>{currentUsers.city}</h3>
-            <h3>{currentUsers.street}</h3>
+            <h3>UserProfilePage</h3>
+            <div className={css.profileWrapper}>
+                {me &&
+                    <div className={css.profileDescription}>
+                        <h3>Id.{me.id}</h3>
+                        <h3>Username: {me.username}</h3>
+                        <h3>Email: {me.email}</h3>
+                        <h3>Phone: {me.phone_number ? me.phone_number : 'null'}</h3>
+                        <h3>City: {me.city ? me.city : 'null'}</h3>
+                        <h3>Age: {me.age ? me.age : 'null'}</h3>
+                    </div>
+
+                }
+                <div className={css.profileAvatar}>
+                    <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375_640.png" alt="avatar"/>
+                </div>
+            </div>
         </div>
     );
 };

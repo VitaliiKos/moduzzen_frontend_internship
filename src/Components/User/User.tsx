@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
 
 import {ButtonDetail} from '..';
-import {ITemporaryUser} from '../../temporaryData';
 import css from './user.module.css';
+import {IUserResp} from '../../interfaces';
 
 interface IProps {
-    user: ITemporaryUser,
+    user: IUserResp,
 }
 
 const User: FC<IProps> = ({user}) => {
@@ -14,7 +14,9 @@ const User: FC<IProps> = ({user}) => {
         <div className={css.userWrapper}>
             <h3>{id}. {username}</h3>
 
-            <ButtonDetail id={id}/>
+            {id &&
+                <ButtonDetail id={id}/>
+            }
 
         </div>
     );

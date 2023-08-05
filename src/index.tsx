@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
-import { App } from './App';
+import {Auth0Provider} from "@auth0/auth0-react";
 
-// import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {App} from './App';
 import {mainStore} from "./Store";
+import {REACT_APP_AUTH0_CLIENT_ID, REACT_APP_AUTH0_DOMAIN} from './env';
 
 
 const root = ReactDOM.createRoot(
@@ -15,11 +16,19 @@ const root = ReactDOM.createRoot(
 const store = mainStore();
 
 root.render(
-        <Provider store={store}>
-            <BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <Auth0Provider
+                domain={REACT_APP_AUTH0_DOMAIN}
+                clientId={REACT_APP_AUTH0_CLIENT_ID}
+                authorizationParams={{
+                    redirect_uri: window.location.origin
+                }}
+            >
                 <App/>
-            </BrowserRouter>
-        </Provider>
+            </Auth0Provider>
+        </BrowserRouter>
+    </Provider>
 );
 
 reportWebVitals();

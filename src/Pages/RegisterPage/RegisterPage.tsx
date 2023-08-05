@@ -1,51 +1,56 @@
-import {FC, useState} from 'react';
+import {FC} from 'react';
+import {SubmitHandler, useForm} from 'react-hook-form';
+import {joiResolver} from '@hookform/resolvers/joi';
 import {useNavigate} from 'react-router-dom';
 
-import {handleChange} from '../../utils';
-import {FormInput} from '../../Components';
-import {IUser} from '../../interfaces/user.inteface';
+import {authValidator} from '../../validators';
+import {ILoginUser} from '../../interfaces';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {authActions} from '../../Store/slice';
 import {RouterEndpoints} from '../../routes';
+import { FormInput } from '../../Components';
+import css from './registerPage.module.css';
+
 
 const RegisterPage: FC = () => {
-
-
-    const defaultUser: IUser = {
-        username: '',
-        email: '',
-        password: '',
-        city: '',
-        street: '',
-        phone: ''
-    }
-
+    const dispatch = useAppDispatch();
+    const {error} = useAppSelector(state => state.authReducer);
     const navigate = useNavigate();
-    const [data, setData] = useState<IUser>(defaultUser);
+    const {register, handleSubmit, reset, formState: {errors, isValid}} = useForm<ILoginUser>(
+        {
+            mode: 'all',
+            resolver: joiResolver(authValidator)
+        }
+    );
 
-    const handleInputChange = (
-        event: React.ChangeEvent<HTMLInputElement>) =>
-        handleChange<IUser>(event, setData);
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setData(defaultUser)
-        navigate(`/${RouterEndpoints.authorization}`)
+    const registerUser: SubmitHandler<ILoginUser> = async (user) => {
+        const {meta: {requestStatus}} = await dispatch(authActions.registerUser(user));
+        if (requestStatus === 'fulfilled') {
+            navigate(`/${RouterEndpoints.login}`)
+        }
+        reset()
     };
 
-    return (
-        <div>
-            <h3>RegisterPage</h3>
-            <form onSubmit={handleSubmit}>
-                <FormInput name="username" value={data.username} onChange={handleInputChange}/>
-                <FormInput name="email" value={data.email} onChange={handleInputChange}/>
-                <FormInput name="password" value={data.password} onChange={handleInputChange} type="password"/>
-                <FormInput name="city" value={data.city} onChange={handleInputChange}/>
-                <FormInput name="street" value={data.street} onChange={handleInputChange}/>
-                <FormInput name="phone" value={data.phone} onChange={handleInputChange}/>
-                <button type="submit">Register</button>
-            </form>
 
-        </div>
+    return (
+        <>
+            <h2>Sign-up</h2>
+            <form onSubmit={handleSubmit(registerUser)}>
+                <div className={css.blockInput}>
+
+                    <div>
+                        <FormInput name={'email'} register={register}/>
+                        <FormInput name={'password'} register={register}/>
+                    </div>
+
+                    <div>
+                        <button disabled={!isValid}>Register</button>
+                    </div>
+                    {Object.keys(errors).length > 0 && <div>{Object.values(errors)[0].message}</div>}
+                    {error && <div>{error.detail}</div>}
+                </div>
+            </form>
+        </>
     );
 };
-
 export {RegisterPage};

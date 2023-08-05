@@ -1,0 +1,18 @@
+.profileWrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.profileDescription {
+    width: 60%;
+}
+
+.profileAvatar {
+    width: 37%;
+}
+
+.profileAvatar img{
+    width: 50%;
+}
