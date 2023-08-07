@@ -9,14 +9,13 @@ import css from './header.module.css';
 
 
 const Header: FC = () => {
-    const {me, token_status} = useAppSelector(state => state.authReducer);
+    const {me} = useAppSelector(state => state.authReducer);
     const dispatch = useAppDispatch();
     useEffect(() => {
-        if (!me && token_status) {
+        if (!me) {
             dispatch(authActions.me())
         }
     }, [me, dispatch])
-
 
     return (
         <>
@@ -27,11 +26,11 @@ const Header: FC = () => {
             <NavLink to={`/${RouterEndpoints.company}`}>Companies</NavLink>
             {me ?
                 <div className={css.current_user_wrapper}>
-                    {me && <NavLink
-                        to={`${RouterEndpoints.profile}/${me.id}`}>{me.email}</NavLink>}
+                    <NavLink to={`${RouterEndpoints.profile}/${me.id}`}>{me.email}</NavLink>
                     <Auth0LogoutButton/>
                 </div>
                 :
+
                 <>
                     <NavLink to={`/${RouterEndpoints.authorization}`}>Login</NavLink>
                     <NavLink to={`/${RouterEndpoints.registration}`}>Register</NavLink>

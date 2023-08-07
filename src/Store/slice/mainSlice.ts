@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction, createAsyncThunk, isRejectedWithValue} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 
-import {IBaseStatus, IHealthCheck, IUserResp} from "../../interfaces";
+import {IBaseStatus, IHealthCheck, IUser, IUserResp} from "../../interfaces";
 import {userService} from "../../services";
 import {IError} from "../../interfaces/error.interface";
 
@@ -15,7 +15,7 @@ interface IState {
     status_code: number | null,
     postgres_status: boolean,
     redis_status: string,
-    users: IUserResp[]
+    users: IUser[]
 }
 
 const initialState: IState = {
@@ -61,7 +61,7 @@ const getBaseStatus = createAsyncThunk<IBaseStatus>(
     }
 )
 
-const getAll = createAsyncThunk<IUserResp[]>(
+const getAll = createAsyncThunk<IUserResp>(
     'mainSlice/getAll',
     async (_, {rejectWithValue}) => {
         try {
@@ -102,10 +102,7 @@ const mainSlice = createSlice({
                 state.status_code = status_code
             })
             .addCase(getAll.fulfilled, (state, action) => {
-                const data = action.payload
-                const www = Object.values(data)[0]
-                // @ts-ignore
-                state.users = www
+                state.users = action.payload.users
             })
             .addCase(getBaseStatus.fulfilled, (state, actions) => {
                 const {postgres_status, redis_status: {status}} = actions.payload;

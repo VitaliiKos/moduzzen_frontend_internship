@@ -1,17 +1,19 @@
 import {FC} from 'react';
+import {FieldValues, UseFormRegister } from 'react-hook-form';
+import { ILoginUser } from '../../interfaces';
 
 
 interface IProps {
     name: string;
     type?: string;
-    register?: any;
+    register: UseFormRegister<ILoginUser & FieldValues>;
 }
 
 const FormInput: FC<IProps> = ({name = '', type = 'text', register}) => {
     return (
         <div>
                 <label>
-                    <input type={type} name={name} placeholder={name} {...register(name)}/>
+                    <input type={type}  placeholder={name} {...register(name)}/>
                 </label>
         </div>
     );

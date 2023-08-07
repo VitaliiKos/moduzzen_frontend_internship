@@ -2,7 +2,7 @@ import {FC} from 'react';
 import {useParams} from 'react-router-dom';
 
 import {ButtonNavigate} from '../../Components';
-import { IUserResp } from '../../interfaces';
+import {IUser} from '../../interfaces';
 import { useAppSelector } from '../../hooks';
 
 const UserDetailPage: FC = () => {
@@ -10,7 +10,7 @@ const UserDetailPage: FC = () => {
     const {id} = useParams();
     const {users} = useAppSelector(state => state.mainReducer);
 
-    const currentUsers: IUserResp | undefined = users.find(user => user.id === Number(id))
+    const currentUsers: IUser | undefined = users.find(user => user.id === Number(id))
 
     if (!currentUsers) {
         return (
@@ -18,7 +18,6 @@ const UserDetailPage: FC = () => {
         );
     }
 
-    console.log(currentUsers)
     return (
         <div>
             <ButtonNavigate navigate_params={'/users'}/>

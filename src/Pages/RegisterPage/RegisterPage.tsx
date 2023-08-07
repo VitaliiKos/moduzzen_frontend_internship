@@ -26,7 +26,7 @@ const RegisterPage: FC = () => {
     const registerUser: SubmitHandler<ILoginUser> = async (user) => {
         const {meta: {requestStatus}} = await dispatch(authActions.registerUser(user));
         if (requestStatus === 'fulfilled') {
-            navigate(`/${RouterEndpoints.login}`)
+            navigate(`/${RouterEndpoints.authorization}`)
         }
         reset()
     };

@@ -1,11 +1,12 @@
 import {apiService} from '.';
+
 import {mainUrls} from '../config';
 import {IBaseStatus, IHealthCheck, IUser, IUserResp} from '../interfaces';
 import {IRes} from '../types';
 
 
 class UserService {
-    getAll(): IRes<IUserResp[]> {
+    getAll(): IRes<IUserResp> {
         return apiService.get(mainUrls.users.users)
     }
 
@@ -21,11 +22,10 @@ class UserService {
         return apiService.delete(mainUrls.users.byId(id))
     }
 
-
-
     healthCheck(): IRes<IHealthCheck> {
         return apiService.get(mainUrls.healthCheck.healthCheck)
     }
+
     baseStatus(): IRes<IBaseStatus> {
         return apiService.get(mainUrls.baseStatus.baseStatus)
     }

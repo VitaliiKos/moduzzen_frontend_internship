@@ -5,7 +5,7 @@ import css from './userProfilePage.module.css'
 
 const UserProfilePage: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
-
+    
     return (
         <div>
             <h3>UserProfilePage</h3>
@@ -13,7 +13,7 @@ const UserProfilePage: FC = () => {
                 {me &&
                     <div className={css.profileDescription}>
                         <h3>Id.{me.id}</h3>
-                        <h3>Username: {me.username}</h3>
+                        <h3>Username: {me.username ? me.username : 'null'}</h3>
                         <h3>Email: {me.email}</h3>
                         <h3>Phone: {me.phone_number ? me.phone_number : 'null'}</h3>
                         <h3>City: {me.city ? me.city : 'null'}</h3>

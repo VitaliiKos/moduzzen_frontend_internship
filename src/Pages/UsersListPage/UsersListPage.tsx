@@ -4,7 +4,7 @@ import {Outlet} from 'react-router-dom';
 import css from './userListPage.module.css';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {mainAction} from '../../Store/slice';
-import { User } from '../../Components';
+import {User} from '../../Components';
 
 
 const UsersListPage: FC = () => {
@@ -21,11 +21,8 @@ const UsersListPage: FC = () => {
                 <h3>UsersListPage</h3>
             </div>
             <div className={css.userList}>
-
-                {users &&
-                    users.map(user =>
-                        user.id && <User key={user.id} user={user}/>
-                    )
+                {
+                    users.map(user => <User key={user.id} user={user}/>)
                 }
             </div>
 
