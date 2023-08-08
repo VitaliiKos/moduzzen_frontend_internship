@@ -1,40 +1,53 @@
-import {FC, useState} from 'react';
+import React, {FC} from 'react';
+import {SubmitHandler, useForm} from 'react-hook-form';
 import {useNavigate} from 'react-router-dom';
+import {joiResolver} from '@hookform/resolvers/joi';
 
-import {FormInput} from '../../Components';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {ILoginUser} from '../../interfaces';
 import {RouterEndpoints} from '../../routes';
-import { handleChange } from '../../utils';
+import {authActions} from '../../Store/slice';
+import {Auth0LoginButton, FormInput} from '../../Components';
+import { authValidator } from '../../validators';
+
+
 
 const AuthorizationPage: FC = () => {
 
-    const initialValue: ILoginUser = {
-        email: '',
-        password: '',
-    }
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [data, setData] = useState<ILoginUser>(initialValue);
+    const {error} = useAppSelector(state => state.authReducer);
 
-    const handleInputChange = (
-        event: React.ChangeEvent<HTMLInputElement>) =>
-        handleChange<ILoginUser>(event, setData);
+    const {handleSubmit, formState: {errors, isValid},  register,reset} = useForm<ILoginUser>({
+        mode: 'all',
+        resolver: joiResolver(authValidator)
+    });
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setData(initialValue)
-        navigate(`/${RouterEndpoints.users}`)
+    const login: SubmitHandler<ILoginUser> = async (user) => {
+        const {meta: {requestStatus}} = await dispatch(authActions.login(user));
+
+        if (requestStatus === 'fulfilled') {
+            navigate(`/${RouterEndpoints.users}`);
+        }
+        reset()
     };
 
     return (
-        <div>
-            <h3>AuthorizationPage</h3>
-            <form onSubmit={handleSubmit}>
-                <FormInput name="email" value={data.email} onChange={handleInputChange}/>
-                <FormInput name="password" value={data.password} onChange={handleInputChange} type="password"/>
-                <button type="submit">Login</button>
-            </form>
+        <>
+            <h2>Sign-in</h2>
+            <form onSubmit={handleSubmit(login)}>
+                <div>
+                    <FormInput name={'email'} register={register}/>
+                    <FormInput name={'password'} register={register} />
+                </div>
+                <button disabled={!isValid}>Login</button>
+                <Auth0LoginButton/>
 
-        </div>
+                {Object.keys(errors).length > 0 && <div>{Object.values(errors)[0].message}</div>}
+                {error && <div>{error.detail}</div>}
+
+            </form>
+        </>
     );
 };
 

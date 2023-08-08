@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {ITestString} from '../../interfaces';
 import {mainAction} from '../../Store/slice';
 import {handleChange} from '../../utils';
-import {FormInput} from '../FormInput/FormInput';
+import { FormInput2 } from '../FormInput/FormInput2';
 
 const initialValue: ITestString = {
     result: '',
@@ -27,7 +27,7 @@ const ChangeString: FC = () => {
             <h3>ChangeString</h3>
             <h3>Test string: {test_string}</h3>
             <form onSubmit={handleSubmit}>
-                <FormInput name="result" value={data.result} onChange={handleInputChange}/>
+                <FormInput2 name="result" value={data.result} onChange={handleInputChange}/>
                 <button type="submit">Change string</button>
             </form>
 

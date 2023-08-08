@@ -6,5 +6,6 @@ export * from './HomePage/HomePage';
 export * from './PageNotFound/PageNotFound';
 export * from './RegisterPage/RegisterPage';
 export * from './UserProfilePage/UserProfilePage';
+export * from './UserDetailPage/UserDetailPage';
 export * from './UsersListPage/UsersListPage';
 

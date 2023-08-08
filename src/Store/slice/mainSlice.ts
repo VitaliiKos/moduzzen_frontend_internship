@@ -1,32 +1,34 @@
 import {createSlice, PayloadAction, createAsyncThunk, isRejectedWithValue} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 
-import {IBaseStatus, IHealthCheck} from "../../interfaces";
-import { userService } from "../../services";
-
+import {IBaseStatus, IHealthCheck, IUser, IUserResp} from "../../interfaces";
+import {userService} from "../../services";
+import {IError} from "../../interfaces/error.interface";
 
 interface IState {
     count: number,
     test_string: string,
-    errors: string |null,
-    res: IHealthCheck|null
-    result:string,
-    detail:string,
-    status_code:number|null,
+    errors: IError
+    res: IHealthCheck | null
+    result: string,
+    detail: string,
+    status_code: number | null,
     postgres_status: boolean,
-    redis_status: string
+    redis_status: string,
+    users: IUser[]
 }
 
 const initialState: IState = {
     count: 0,
     test_string: '',
     res: null,
-    errors: null,
-    result:'',
-    detail:'',
-    status_code:null,
+    errors: {},
+    result: '',
+    detail: '',
+    status_code: null,
     postgres_status: false,
-    redis_status: ''
+    redis_status: '',
+    users: []
 
 }
 
@@ -59,6 +61,20 @@ const getBaseStatus = createAsyncThunk<IBaseStatus>(
     }
 )
 
+const getAll = createAsyncThunk<IUserResp>(
+    'mainSlice/getAll',
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data} = await userService.getAll();
+            return data;
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response?.data)
+        }
+    }
+)
+
+
 const mainSlice = createSlice({
     name: 'mainSlice',
     initialState,
@@ -79,19 +95,23 @@ const mainSlice = createSlice({
     },
     extraReducers: builder =>
         builder
-            .addCase(getHealthCheck.fulfilled, (state, action)=>{
-                const {result,detail,status_code} = action.payload;
+            .addCase(getHealthCheck.fulfilled, (state, action) => {
+                const {result, detail, status_code} = action.payload;
                 state.result = result
                 state.detail = detail
                 state.status_code = status_code
             })
-            .addCase(getBaseStatus.fulfilled, (state, actions)=>{
-                const {postgres_status,redis_status:{status}} = actions.payload;
+            .addCase(getAll.fulfilled, (state, action) => {
+                state.users = action.payload.users
+            })
+            .addCase(getBaseStatus.fulfilled, (state, actions) => {
+                const {postgres_status, redis_status: {status}} = actions.payload;
                 state.postgres_status = postgres_status;
                 state.redis_status = status
             })
-            .addMatcher(isRejectedWithValue(), (state, action)=>{
-                state.errors = 'action.payload'
+            .addMatcher(isRejectedWithValue(), (state: IState, action) => {
+                const errorPayload = action.payload as IError;
+                state.errors = errorPayload
             })
 })
 
@@ -100,6 +120,7 @@ const {reducer: mainReducer, actions} = mainSlice;
 const mainAction = {
     ...actions,
     getHealthCheck,
-    getBaseStatus
+    getBaseStatus,
+    getAll
 };
 export {mainReducer, mainAction}

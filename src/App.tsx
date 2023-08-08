@@ -1,17 +1,19 @@
 import {FC} from 'react';
 import {Route, Routes} from "react-router-dom";
+import {RequiredAuth} from './hoc';
 
 import {MainLayout} from './Layouts';
 import {
     HomePage,
     PageNotFound,
     AboutPage,
-    RegisterPage,
     AuthorizationPage,
     CompaniesListPage,
     CompanyProfilePage,
     UsersListPage,
-    UserProfilePage
+    UserDetailPage,
+    UserProfilePage,
+    RegisterPage
 } from './Pages';
 import {RouterEndpoints} from './routes';
 
@@ -21,14 +23,37 @@ const App: FC = () => {
             <Routes>
                 <Route path={RouterEndpoints.index} element={<MainLayout/>}>
                     <Route path={RouterEndpoints.index} index element={<HomePage/>}/>
+
+
                     <Route path={RouterEndpoints.about} element={<AboutPage/>}/>
 
-                    <Route path={RouterEndpoints.users} element={<UsersListPage/>}>
-                        <Route path={RouterEndpoints.id} element={<UserProfilePage/>}/>
+                    <Route path={RouterEndpoints.users} element={
+                        <RequiredAuth>
+                            <UsersListPage/>
+                        </RequiredAuth>
+                    }>
+                        <Route path={RouterEndpoints.id} element={
+                            <RequiredAuth>
+                                <UserDetailPage/>
+                            </RequiredAuth>
+                        }/>
                     </Route>
+                    <Route path={`${RouterEndpoints.profile}`} element={
+                        <RequiredAuth>
+                            <UserProfilePage/>
+                        </RequiredAuth>
+                    }/>
 
-                    <Route path={RouterEndpoints.company} element={<CompaniesListPage/>}>
-                        <Route path={RouterEndpoints.id} element={<CompanyProfilePage/>}/>
+                    <Route path={RouterEndpoints.company} element={
+                        <RequiredAuth>
+                            <CompaniesListPage/>
+                        </RequiredAuth>
+                    }>
+                        <Route path={RouterEndpoints.id} element={
+                            <RequiredAuth>
+                                <CompanyProfilePage/>
+                            </RequiredAuth>
+                        }/>
                     </Route>
 
                     <Route path={RouterEndpoints.authorization} element={<AuthorizationPage/>}/>
