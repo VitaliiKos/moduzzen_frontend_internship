@@ -38,7 +38,7 @@ const App: FC = () => {
                             </RequiredAuth>
                         }/>
                     </Route>
-                    <Route path={`${RouterEndpoints.profile}/:id`} element={
+                    <Route path={`${RouterEndpoints.profile}`} element={
                         <RequiredAuth>
                             <UserProfilePage/>
                         </RequiredAuth>

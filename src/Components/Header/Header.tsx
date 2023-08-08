@@ -26,7 +26,7 @@ const Header: FC = () => {
             <NavLink to={`/${RouterEndpoints.company}`}>Companies</NavLink>
             {me ?
                 <div className={css.current_user_wrapper}>
-                    <NavLink to={`${RouterEndpoints.profile}/${me.id}`}>{me.email}</NavLink>
+                    <NavLink to={`${RouterEndpoints.profile}`}>{me.email}</NavLink>
                     <Auth0LogoutButton/>
                 </div>
                 :

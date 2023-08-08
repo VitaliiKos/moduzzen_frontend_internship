@@ -59,10 +59,10 @@ const authSlice = createSlice({
     name: 'authSlice',
     initialState,
     reducers: {
-        set_token_status: (state, action) => {
+        set_token_status: (state) => {
             state.token_status = true
         },
-        delete_token: (state, action) => {
+        delete_token: (state) => {
             localStorage.removeItem('access')
             state.token_status = false
             state.me = null
