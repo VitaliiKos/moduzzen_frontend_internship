@@ -1,35 +1,42 @@
 import {createSlice, PayloadAction, createAsyncThunk, isRejectedWithValue} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 
-import {IBaseStatus, IHealthCheck, IUser, IUserResp} from "../../interfaces";
-import {userService} from "../../services";
+import {IBaseStatus, IHealthCheck, IPagination, IUser} from "../../interfaces";
+import {authService, userService} from "../../services";
 import {IError} from "../../interfaces/error.interface";
 
 interface IState {
     count: number,
     test_string: string,
-    errors: IError
+    error: IError
     res: IHealthCheck | null
     result: string,
     detail: string,
     status_code: number | null,
     postgres_status: boolean,
     redis_status: string,
-    users: IUser[]
+    users: IUser[],
+    selected_user: IUser | null,
+    userForUpdate: IUser | null,
+    total_item: number,
+    total_page:number
 }
 
 const initialState: IState = {
     count: 0,
     test_string: '',
     res: null,
-    errors: {},
+    error: {},
     result: '',
     detail: '',
     status_code: null,
     postgres_status: false,
     redis_status: '',
-    users: []
-
+    users: [],
+    selected_user: null,
+    userForUpdate: null,
+    total_item: 0,
+    total_page:1
 }
 
 
@@ -60,12 +67,15 @@ const getBaseStatus = createAsyncThunk<IBaseStatus>(
 
     }
 )
+export interface ISkip {
+    skip: string | number
+}
 
-const getAll = createAsyncThunk<IUserResp>(
+const getAll = createAsyncThunk<IPagination<IUser[]>, { skip: ISkip }>(
     'mainSlice/getAll',
-    async (_, {rejectWithValue}) => {
+    async ({skip}, {rejectWithValue}) => {
         try {
-            const {data} = await userService.getAll();
+            const {data} = await userService.getAll(skip);
             return data;
         } catch (e) {
             const err = e as AxiosError
@@ -74,11 +84,52 @@ const getAll = createAsyncThunk<IUserResp>(
     }
 )
 
+const getById = createAsyncThunk<IUser, { id: number }>(
+    'mainSlice/getById',
+    async ({id}, {rejectWithValue}) => {
+        try {
+            const {data} = await userService.getById(id);
+            return data;
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response?.data)
+        }
+    }
+)
+
+const update = createAsyncThunk<void, { user: IUser, id: number }>(
+    'mainSlice/update',
+    async ({id, user}, {rejectWithValue}) => {
+        try {
+            await userService.updateById(id, user)
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response?.data)
+        }
+    }
+)
+
+const deleteUser = createAsyncThunk<void, { id: number }>(
+    'mainSlice/deleteUser',
+    async ({id}, {rejectWithValue}) => {
+        try {
+            await userService.deleteById(id)
+            authService.deleteTokens()
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response?.data)
+        }
+    }
+)
 
 const mainSlice = createSlice({
     name: 'mainSlice',
     initialState,
     reducers: {
+        setUserForUpdate: (state, action) => {
+            state.userForUpdate = action.payload
+        },
+
         inc: (state) => {
             state.count += 1
         },
@@ -101,8 +152,17 @@ const mainSlice = createSlice({
                 state.detail = detail
                 state.status_code = status_code
             })
-            .addCase(getAll.fulfilled, (state, action) => {
-                state.users = action.payload.users
+            .addCase(getAll.fulfilled, (state, action:PayloadAction<IPagination<IUser[]>>) => {
+                const {data, total_item, total_page} = action.payload;
+                state.users = data ;
+                state.total_item=total_item
+                state.total_page=total_page
+            })
+            .addCase(getById.fulfilled, (state, action) => {
+                state.selected_user = action.payload
+            })
+            .addCase(update.fulfilled, state => {
+                state.userForUpdate = null
             })
             .addCase(getBaseStatus.fulfilled, (state, actions) => {
                 const {postgres_status, redis_status: {status}} = actions.payload;
@@ -111,7 +171,7 @@ const mainSlice = createSlice({
             })
             .addMatcher(isRejectedWithValue(), (state: IState, action) => {
                 const errorPayload = action.payload as IError;
-                state.errors = errorPayload
+                state.error = errorPayload
             })
 })
 
@@ -121,6 +181,9 @@ const mainAction = {
     ...actions,
     getHealthCheck,
     getBaseStatus,
-    getAll
+    getAll,
+    getById,
+    deleteUser,
+    update,
 };
 export {mainReducer, mainAction}

@@ -1,13 +1,17 @@
 import {apiService} from '.';
+import { ISkip } from '../Store/slice';
 
 import {mainUrls} from '../config';
-import {IBaseStatus, IHealthCheck, IUser, IUserResp} from '../interfaces';
+import {IBaseStatus, IHealthCheck, IPagination, IUser} from '../interfaces';
 import {IRes} from '../types';
 
 
 class UserService {
-    getAll(): IRes<IUserResp> {
-        return apiService.get(mainUrls.users.users)
+    getAll({skip = 1}: ISkip):  IRes<IPagination<IUser[]>> {
+        return apiService.get(mainUrls.users.users, {params:{skip}})
+    }
+    getById(id: number): IRes<IUser> {
+        return apiService.get(mainUrls.users.byId(id))
     }
 
     create(user: IUser): IRes<IUser> {
@@ -15,7 +19,7 @@ class UserService {
     }
 
     updateById(id: number, car: IUser): IRes<IUser> {
-        return apiService.put(mainUrls.users.byId(id), car)
+        return apiService.patch(mainUrls.users.byId(id), car)
     }
 
     deleteById(id: number): IRes<void> {

@@ -27,17 +27,8 @@ const App: FC = () => {
 
                     <Route path={RouterEndpoints.about} element={<AboutPage/>}/>
 
-                    <Route path={RouterEndpoints.users} element={
-                        <RequiredAuth>
-                            <UsersListPage/>
-                        </RequiredAuth>
-                    }>
-                        <Route path={RouterEndpoints.id} element={
-                            <RequiredAuth>
-                                <UserDetailPage/>
-                            </RequiredAuth>
-                        }/>
-                    </Route>
+                    <Route path={RouterEndpoints.users} element={<RequiredAuth><UsersListPage/></RequiredAuth>}/>
+                    <Route path={`${RouterEndpoints.users}/${RouterEndpoints.id}`} element={<RequiredAuth><UserDetailPage/></RequiredAuth>}/>
                     <Route path={`${RouterEndpoints.profile}`} element={
                         <RequiredAuth>
                             <UserProfilePage/>

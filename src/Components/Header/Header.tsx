@@ -12,7 +12,7 @@ const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const dispatch = useAppDispatch();
     useEffect(() => {
-        if (!me) {
+        if (!me && localStorage.getItem('access')) {
             dispatch(authActions.me())
         }
     }, [me, dispatch])
