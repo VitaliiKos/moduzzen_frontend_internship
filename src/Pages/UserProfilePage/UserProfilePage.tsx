@@ -1,32 +1,31 @@
 import {FC, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useNavigate} from 'react-router';
 
-import css from './userProfilePage.module.css'
 import {mainAction} from '../../Store/slice';
 import {UserUpdateForm} from '../../Components';
-import { useNavigate } from 'react-router';
-import { RouterEndpoints } from '../../routes';
+import {RouterEndpoints} from '../../routes';
+import css from './userProfilePage.module.css'
 
 const UserProfilePage: FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const {me} = useAppSelector(state => state.authReducer);
-    const {userForUpdate} = useAppSelector(state => state.mainReducer);
-
+    const {userForUpdate,} = useAppSelector(state => state.mainReducer);
     useEffect(() => {
 
-    }, [me, dispatch]);
+    }, [me]);
     return (
         <div>
             <div className={css.profileWrapper}>
                 {me &&
                     <div className={css.profileDescription}>
                         <h3>Id.{me.id}</h3>
-                        <h3>Username: {me.username ? me.username : 'null'}</h3>
+                        <h3>Username: {me.username ?? 'null'}</h3>
                         <h3>Email: {me.email}</h3>
-                        <h3>Phone: {me.phone_number ? me.phone_number : 'null'}</h3>
-                        <h3>City: {me.city ? me.city : 'null'}</h3>
-                        <h3>Age: {me.age ? me.age : 'null'}</h3>
+                        <h3>Phone: {me.phone_number ?? 'null'}</h3>
+                        <h3>City: {me.city ?? 'null'}</h3>
+                        <h3>Age: {me.age ?? 'null'}</h3>
                         <h3>Created at: {me.created_at}</h3>
                         <h3>Updated at: {me.updated_at}</h3>
                         <div className={css.formButtonWrapper}>

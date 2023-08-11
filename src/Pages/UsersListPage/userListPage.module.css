@@ -12,8 +12,13 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px
-    /*width: 23%;*/
 }
 .currentUserWrapper{
     width: 55%;
+}
+.paginationSelectedButton{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
 }

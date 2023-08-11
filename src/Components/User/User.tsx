@@ -23,7 +23,7 @@ const User: FC<IProps> = ({user}) => {
                     <h2>{id}.{username}<span>Engineer</span></h2>
                     <div className={css.buttonWrapper}>
                         <Link to={"#"} className={css.follow}>Follow</Link>
-                        <Link to={`/${RouterEndpoints.users}/${id}`} className={css.info}>More Info</Link>
+                        <Link to={`/${RouterEndpoints.users}/${id}`} className={css.info}>Info</Link>
                     </div>
                 </figcaption>
             </figure>

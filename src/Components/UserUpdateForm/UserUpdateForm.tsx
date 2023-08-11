@@ -7,12 +7,11 @@ import {authActions, mainAction} from '../../Store/slice';
 import {FormInput} from '../FormInput/FormInput';
 import css from './userUpdateForm.module.css';
 import {ButtonNavigate} from '../ButtonNavigate/ButtonNavigate';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { profileValidator } from '../../validators';
+import {joiResolver} from '@hookform/resolvers/joi';
+import {profileValidator} from '../../validators';
 
 
 const UserUpdateForm: FC = () => {
-
 
     const {reset, handleSubmit, register, setValue, formState: {errors, isValid}} = useForm<IUser>(
         {
@@ -34,8 +33,11 @@ const UserUpdateForm: FC = () => {
     }, [userForUpdate, setValue])
 
     const update: SubmitHandler<IUser> = async (user) => {
-        dispatch(mainAction.update({id: Number(userForUpdate!.id), user}))
-        dispatch(authActions.me())
+        const {meta: {requestStatus}} = await dispatch(mainAction.update({id: Number(userForUpdate!.id), user}))
+
+        if (requestStatus === 'fulfilled') {
+            dispatch(authActions.me());
+        }
         reset()
     };
 

@@ -3,7 +3,9 @@ export * from './baseStatus.interface';
 export * from './error.interface';
 export * from './healthCheck.interface';
 export * from './loginUser.interface';
+export * from './page.interface';
 export * from './pagination.interface';
+export * from './request.interface'
 export * from './testString.interface';
 export * from './tokens.interface';
 export * from './user.inteface';

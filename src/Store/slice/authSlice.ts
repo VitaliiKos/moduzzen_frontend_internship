@@ -21,10 +21,10 @@ const registerUser = createAsyncThunk<void, IRegisterUser>(
     'authSlice/register',
     async (user, {rejectWithValue}) => {
         try {
-            await authService.registerUser(user)
+            await authService.registerUser(user);
         } catch (e) {
-            const err = e as AxiosError
-            return rejectWithValue(err.response?.data)
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
         }
     }
 )
@@ -34,8 +34,8 @@ const login = createAsyncThunk<IUser, ILoginUser>(
         try {
             return await authService.login(data);
         } catch (e) {
-            const err = e as AxiosError
-            return rejectWithValue(err.response?.data)
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
         }
     }
 )
@@ -45,11 +45,11 @@ const me = createAsyncThunk<IUser, void>(
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await authService.me();
-            return data
+            return data;
 
         } catch (e) {
-            const err = e as AxiosError
-            return rejectWithValue(err.response?.data)
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
         }
     }
 )
@@ -60,27 +60,30 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         set_token_status: (state) => {
-            state.token_status = true
+            state.token_status = true;
         },
         delete_token: (state) => {
-            localStorage.removeItem('access')
-            state.token_status = false
-            state.me = null
+            localStorage.removeItem('access');
+            state.token_status = false;
+            state.me = null;
         }
     },
     extraReducers: builder => {
         builder
             .addCase(login.fulfilled, (state, action) => {
-                state.me = action.payload
+                state.me = action.payload;
+                state.error = null;
             })
             .addCase(me.fulfilled, (state, action) => {
-                state.me = action.payload
+                state.me = action.payload;
+                state.error = null;
+
             })
             .addMatcher(isFulfilled(), state => {
-                state.error = null
+                state.error = null;
             })
             .addMatcher(isRejectedWithValue(), (state, action) => {
-                state.error = action.payload as IErrorAuth
+                state.error = action.payload as IErrorAuth;
             })
     }
 });

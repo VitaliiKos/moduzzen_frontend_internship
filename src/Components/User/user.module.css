@@ -1,23 +1,14 @@
 .userWrapper {
-    /*display: flex;*/
-    /*flex-wrap: nowrap;*/
-    /*flex-direction: column;*/
-    width: 23%;
+    width: 18%;
 
 }
 .buttonWrapper{
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*flex-wrap: nowrap;*/
 }
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,600);
 .snip1336 {
     font-family: 'Roboto', Arial, sans-serif;
     position: relative;
     overflow: hidden;
     margin: 10px;
-    /*min-width: 230px;*/
-    /*max-width: 315px;*/
     width: 100%;
     color: #ffffff;
     text-align: left;
@@ -36,7 +27,7 @@
 .snip1336 figcaption {
     width: 100%;
     background-color: #141414;
-    padding: 25px;
+    padding: 5px;
     position: relative;
 }
 .snip1336 figcaption:before {

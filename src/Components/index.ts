@@ -13,3 +13,4 @@ export * from './Auth0LoginButton/Auth0LoginButton';
 export * from './Auth0LogoutButton/Auth0LogoutButton';
 export * from './UserUpdateForm/UserUpdateForm';
 export * from './PaginationItem/PaginationItem';
+export * from './SkipItem/SkipItem';

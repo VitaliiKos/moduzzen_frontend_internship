@@ -1,43 +1,42 @@
-import {FC} from 'react';
+import {ChangeEvent, FC, useEffect} from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import {useSearchParams} from 'react-router-dom';
+
+import {useAppDispatch} from '../../hooks';
+import {mainAction} from '../../Store/slice';
 
 
 interface IProps {
     total_page: number;
     total_item: number;
+    current_page: number;
 }
 
-const PaginationItem: FC<IProps> = ({total_item, total_page}) => {
-    const [query, setQuery] = useSearchParams({skip: '0'});
-    const currentSkip = Number(query.get('skip')) || 0;
+const PaginationItem: FC<IProps> = ({total_page, current_page}) => {
+    const dispatch = useAppDispatch();
+    const [, setQuery] = useSearchParams({page: '1'});
 
-    const handlePrevPage = () => {
-        if (currentSkip - 5 >= 0) {
-            setQuery({skip: (currentSkip - 5).toString()});
-        }
-    };
+    const handleChange = (event: ChangeEvent<unknown>, page: number) => {
+        event.preventDefault()
+        dispatch(mainAction.setSkip(page))
+        setQuery({page: page.toString()})
 
-    const handleNextPage = () => {
-        if (currentSkip + 5 <= total_item) {
-            setQuery({skip: (currentSkip + 5).toString()});
-        }
-    };
+    }
+
     return (
         <div>
-            <button disabled={currentSkip < 5} onClick={handlePrevPage}>
-                PrevPage
-            </button>
-            <button disabled={currentSkip > total_item - 5} onClick={handleNextPage}>
-                NextPage
-            </button>
-
-
             <Stack spacing={1}>
-                <Pagination count={total_item} variant="outlined" shape="rounded"/>
+                <Pagination
+                    color={'primary'}
+                    count={total_page < 10 ? total_page : 10}
+                    variant="outlined"
+                    shape="circular"
+                    boundaryCount={2}
+                    onChange={handleChange}
+                    page={current_page > total_page ? 1 : current_page}
+                />
             </Stack>
-
         </div>
     );
 };

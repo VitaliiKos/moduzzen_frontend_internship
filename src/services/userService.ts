@@ -1,15 +1,16 @@
 import {apiService} from '.';
-import { ISkip } from '../Store/slice';
 
 import {mainUrls} from '../config';
 import {IBaseStatus, IHealthCheck, IPagination, IUser} from '../interfaces';
+import {IRequest} from '../interfaces/request.interface';
 import {IRes} from '../types';
 
 
 class UserService {
-    getAll({skip = 1}: ISkip):  IRes<IPagination<IUser[]>> {
-        return apiService.get(mainUrls.users.users, {params:{skip}})
+    getAll({limit=10, skip=0}: IRequest): IRes<IPagination<IUser[]>> {
+        return apiService.get(mainUrls.users.users, {params: {limit, skip}})
     }
+
     getById(id: number): IRes<IUser> {
         return apiService.get(mainUrls.users.byId(id))
     }
