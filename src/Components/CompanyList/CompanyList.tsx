@@ -24,7 +24,6 @@ const CompanyList: FC<IProps> = ({companies, total_item, total_page}) => {
         dispatch(companyActions.setSkip(page))
     }
 
-    const filteredCompanies = companies.filter(company => company.status === true);
 
 
     return (
@@ -36,7 +35,7 @@ const CompanyList: FC<IProps> = ({companies, total_item, total_page}) => {
             </div>
             <div className={css.companyList}>
                 {
-                    filteredCompanies.map(company => <Company key={company.id} company={company} />)
+                    companies.map(company => <Company key={company.id} company={company} />)
                 }
             </div>
         </div>
