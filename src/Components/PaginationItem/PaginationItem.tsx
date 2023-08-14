@@ -11,9 +11,10 @@ interface IProps {
     total_page: number;
     total_item: number;
     current_page: number;
+    selectedPage: (page: number) => void;
 }
 
-const PaginationItem: FC<IProps> = ({total_page, current_page}) => {
+const PaginationItem: FC<IProps> = ({total_page, current_page, selectedPage}) => {
     const dispatch = useAppDispatch();
     const [, setQuery] = useSearchParams({page: '1'});
 
@@ -21,8 +22,12 @@ const PaginationItem: FC<IProps> = ({total_page, current_page}) => {
         event.preventDefault()
         dispatch(mainAction.setSkip(page))
         setQuery({page: page.toString()})
-
+        selectedPage(page)
     }
+    useEffect(() => {
+        selectedPage(current_page)
+
+    }, [current_page, selectedPage]);
 
     return (
         <div>

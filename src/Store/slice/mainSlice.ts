@@ -133,9 +133,6 @@ const mainSlice = createSlice({
         setUserForUpdate: (state, action) => {
             state.userForUpdate = action.payload;
         },
-        setLimit: (state, action) => {
-            state.limit = action.payload > 0 ? action.payload : 5;
-        },
         setSkip: (state, action) => {
             state.skip = state.limit * (action.payload - 1);
         },

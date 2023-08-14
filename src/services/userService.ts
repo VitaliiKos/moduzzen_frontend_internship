@@ -7,8 +7,8 @@ import {IRes} from '../types';
 
 
 class UserService {
-    getAll({limit=10, skip=0}: IRequest): IRes<IPagination<IUser[]>> {
-        return apiService.get(mainUrls.users.users, {params: {limit, skip}})
+    getAll({skip = 0}: IRequest): IRes<IPagination<IUser[]>> {
+        return apiService.get(mainUrls.users.users, {params: {skip}})
     }
 
     getById(id: number): IRes<IUser> {
@@ -19,8 +19,8 @@ class UserService {
         return apiService.post(mainUrls.users.users, user)
     }
 
-    updateById(id: number, car: IUser): IRes<IUser> {
-        return apiService.patch(mainUrls.users.byId(id), car)
+    updateById(id: number, user: IUser): IRes<IUser> {
+        return apiService.patch(mainUrls.users.byId(id), user)
     }
 
     deleteById(id: number): IRes<void> {

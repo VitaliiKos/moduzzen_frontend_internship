@@ -1,0 +1,19 @@
+.companyProfileWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 40px 20px;
+}
+
+.company_img {
+    width: 50%;
+}
+
+.company_img img {
+    width: 100%;
+}
+
+.companyProfileWrapper h4{
+    margin: 5px;
+}

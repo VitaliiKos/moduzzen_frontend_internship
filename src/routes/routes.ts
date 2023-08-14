@@ -14,6 +14,7 @@ export const RouterEndpoints = {
     company: 'company',
     users: "users",
     profile: "profile",
+    myCompanies: "my_company",
 
     notFound: '*',
 }

@@ -1,16 +1,18 @@
-import {FC, ReactNode} from 'react';
+import {FC} from 'react';
 
 import css from './universalModalWindow.module.css';
 
-interface ModalProps {
-    isOpen: boolean;
+interface IProps {
+    visible: boolean;
     onClose: () => void;
-    children: ReactNode;
+    children: React.ReactNode;
+
+
 }
 
-const UniversalModalWindow: FC<ModalProps> = ({isOpen, onClose, children}) => {
+const UniversalModalWindow: FC<IProps> = ({visible, onClose, children}) => {
 
-    if (!isOpen) {
+    if (!visible) {
         return null;
     }
 

@@ -4,6 +4,7 @@ import {useParams} from 'react-router-dom';
 import {ButtonNavigate} from '../../Components';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {mainAction} from '../../Store/slice';
+import { RouterEndpoints } from '../../routes';
 
 const UserDetailPage: FC = () => {
 
@@ -24,7 +25,7 @@ const UserDetailPage: FC = () => {
 
     return (
         <div>
-            <ButtonNavigate navigate_params={'/users'}/>
+            <ButtonNavigate navigate_params={`/${RouterEndpoints.users}`}/>
             <h3>{selected_user.id}. {selected_user.username}</h3>
             <h3>Email: {selected_user.email}</h3>
             <h3>Age: {selected_user.age}</h3>

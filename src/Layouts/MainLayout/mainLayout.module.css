@@ -1,6 +1,6 @@
 .modalWindow {
     position: absolute;
-    top: 70px;
+    bottom: 70px;
     right: 50px;
 }
 

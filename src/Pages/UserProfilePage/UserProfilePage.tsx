@@ -36,6 +36,9 @@ const UserProfilePage: FC = () => {
                             }}>delete
                             </button>
                         </div>
+                        <div>
+                            <button onClick={()=> navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}`)}>Show my companies</button>
+                        </div>
                     </div>
 
                 }

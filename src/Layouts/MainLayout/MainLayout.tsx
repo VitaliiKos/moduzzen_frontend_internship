@@ -22,7 +22,7 @@ const MainLayout: FC = () => {
             <div className={css.modalWindow}>
                 <button className={css.modalWindowButton} onClick={openModal}>Open Modal</button>
 
-                <UniversalModalWindow isOpen={isModalOpen} onClose={closeModal}>
+                <UniversalModalWindow visible={isModalOpen} onClose={closeModal}>
                     <h2>Modal Content</h2>
                     <p>This is an example modal window.</p>
                 </UniversalModalWindow>

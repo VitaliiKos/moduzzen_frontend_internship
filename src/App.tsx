@@ -13,7 +13,8 @@ import {
     UsersListPage,
     UserDetailPage,
     UserProfilePage,
-    RegisterPage
+    RegisterPage,
+    MyListCompanyPage
 } from './Pages';
 import {RouterEndpoints} from './routes';
 
@@ -28,24 +29,27 @@ const App: FC = () => {
                     <Route path={RouterEndpoints.about} element={<AboutPage/>}/>
 
                     <Route path={RouterEndpoints.users} element={<RequiredAuth><UsersListPage/></RequiredAuth>}/>
-                    <Route path={`${RouterEndpoints.users}/${RouterEndpoints.id}`} element={<RequiredAuth><UserDetailPage/></RequiredAuth>}/>
+                    <Route path={`${RouterEndpoints.users}/${RouterEndpoints.id}`}
+                           element={<RequiredAuth><UserDetailPage/></RequiredAuth>}/>
+
                     <Route path={`${RouterEndpoints.profile}`} element={
                         <RequiredAuth>
                             <UserProfilePage/>
                         </RequiredAuth>
                     }/>
 
-                    <Route path={RouterEndpoints.company} element={
-                        <RequiredAuth>
-                            <CompaniesListPage/>
-                        </RequiredAuth>
-                    }>
-                        <Route path={RouterEndpoints.id} element={
-                            <RequiredAuth>
-                                <CompanyProfilePage/>
-                            </RequiredAuth>
-                        }/>
-                    </Route>
+                    <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}`} element={
+                        <RequiredAuth><MyListCompanyPage/></RequiredAuth>}/>
+
+                    <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}/${RouterEndpoints.id}`}
+                           element={<CompanyProfilePage/>}/>
+
+                    <Route path={RouterEndpoints.company} element={<RequiredAuth><CompaniesListPage/></RequiredAuth>}/>
+                    <Route path={`${RouterEndpoints.company}/${RouterEndpoints.id}`}
+                           element={
+                               <RequiredAuth>
+                                   <CompanyProfilePage/>
+                               </RequiredAuth>}/>
 
                     <Route path={RouterEndpoints.authorization} element={<AuthorizationPage/>}/>
                     <Route path={RouterEndpoints.registration} element={<RegisterPage/>}/>

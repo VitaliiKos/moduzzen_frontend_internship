@@ -9,3 +9,4 @@ export * from './request.interface'
 export * from './testString.interface';
 export * from './tokens.interface';
 export * from './user.inteface';
+export * from './company.interface';

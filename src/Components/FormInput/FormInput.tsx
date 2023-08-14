@@ -1,12 +1,12 @@
 import {FC} from 'react';
 import {FieldValues, UseFormRegister} from 'react-hook-form';
-import {ILoginUser, IUser} from '../../interfaces';
+import {ICompany, ILoginUser, IUser} from '../../interfaces';
 
 
 interface IProps {
     name: string;
     type?: string;
-    register: UseFormRegister<ILoginUser & FieldValues> | UseFormRegister<IUser & FieldValues>;
+    register: UseFormRegister<ILoginUser & FieldValues> | UseFormRegister<IUser & FieldValues>| UseFormRegister<ICompany & FieldValues>;
 }
 
 const FormInput: FC<IProps> = ({name = '', type = 'text', register}) => {
