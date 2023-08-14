@@ -25,17 +25,17 @@ const CompanyList: FC<IProps> = ({companies, total_item, total_page}) => {
     }
 
 
-
     return (
         <div className={css.companyListWrapper}>
+            <h3>Total items {total_item}</h3>
             <div className={css.paginationSelectedButton}>
-                    <PaginationItem total_page={total_page} total_item={total_item} current_page={current_page}
-                                    selectedPage={selectedPage}
-                    />
+                <PaginationItem total_page={total_page} total_item={total_item} current_page={current_page}
+                                selectedPage={selectedPage}
+                />
             </div>
             <div className={css.companyList}>
                 {
-                    companies.map(company => <Company key={company.id} company={company} />)
+                    companies.map(company => <Company key={company.id} company={company}/>)
                 }
             </div>
         </div>

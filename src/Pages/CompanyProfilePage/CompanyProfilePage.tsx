@@ -39,7 +39,7 @@ const CompanyProfilePage: FC = () => {
                 <h4>Email: {selected_company.email}</h4>
                 <h4>Phone: {selected_company.phone}</h4>
                 <h4>Active status: {selected_company.status ? 'Visable' : 'Invisable'}</h4>
-                <h4>Role: {company_role}</h4>
+                <h4>Your role: {company_role}</h4>
                 {
                     company_role!.toLowerCase() === 'owner' &&
                     <div>
