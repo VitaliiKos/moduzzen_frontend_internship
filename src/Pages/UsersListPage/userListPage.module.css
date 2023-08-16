@@ -1,14 +1,24 @@
 .userListWrapper{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: space-around;
 }
 .userListTitle{
+
     width: 100%;
 }
 .userList{
-    width: 40%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px
 }
 .currentUserWrapper{
     width: 55%;
+}
+.paginationSelectedButton{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
 }

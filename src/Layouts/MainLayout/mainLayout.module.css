@@ -1,6 +1,6 @@
 .modalWindow {
     position: absolute;
-    top: 70px;
+    bottom: 70px;
     right: 50px;
 }
 
@@ -39,7 +39,8 @@
     width: 100%;
     overflow: hidden;
     overflow-y: auto;
-    margin-top: 60px;
+    box-sizing: border-box;
+    margin: 60px 0;
 }
 
 .menu a[class='active'] {
@@ -48,21 +49,23 @@
 }
 
 .footer {
-    min-height: 40px;
+    height: 40px;
     background-color: #282c34;
     display: flex;
     justify-content: center;
     padding-right: 28px;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 14px;
     position: fixed;
     bottom: 0;
     width: 100vw;
     z-index: 2;
     color: gold;
 }
-
-.modalWindowButton {
+.footer h4{
+    margin: 10px;
+}
+    .modalWindowButton {
     padding: 0.6em 2em;
     border: none;
     outline: none;

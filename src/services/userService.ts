@@ -1,21 +1,26 @@
 import {apiService} from '.';
 
 import {mainUrls} from '../config';
-import {IBaseStatus, IHealthCheck, IUser, IUserResp} from '../interfaces';
+import {IBaseStatus, IHealthCheck, IPagination, IUser} from '../interfaces';
+import {IRequest} from '../interfaces/request.interface';
 import {IRes} from '../types';
 
 
 class UserService {
-    getAll(): IRes<IUserResp> {
-        return apiService.get(mainUrls.users.users)
+    getAll({skip = 0}: IRequest): IRes<IPagination<IUser[]>> {
+        return apiService.get(mainUrls.users.users, {params: {skip}})
+    }
+
+    getById(id: number): IRes<IUser> {
+        return apiService.get(mainUrls.users.byId(id))
     }
 
     create(user: IUser): IRes<IUser> {
         return apiService.post(mainUrls.users.users, user)
     }
 
-    updateById(id: number, car: IUser): IRes<IUser> {
-        return apiService.put(mainUrls.users.byId(id), car)
+    updateById(id: number, user: IUser): IRes<IUser> {
+        return apiService.patch(mainUrls.users.byId(id), user)
     }
 
     deleteById(id: number): IRes<void> {
