@@ -29,7 +29,7 @@ class CompanyService {
     }
 
     updateById(id: number, cacompany: ICompany): IRes<ICompany> {
-        return apiService.patch(mainUrls.company.byId(id), cacompany)
+        return apiService.patch(mainUrls.company.byIdInfo(id), cacompany)
     }
 
     deleteById(id: number): IRes<void> {

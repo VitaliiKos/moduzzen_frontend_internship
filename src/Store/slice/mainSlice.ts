@@ -148,7 +148,11 @@ const mainSlice = createSlice({
         },
         change_string: (state, actions: PayloadAction<string>) => {
             state.test_string = actions.payload;
-        }
+        },
+        clearUserState: (state) => {
+            state.users = [];
+        },
+
 
     },
     extraReducers: builder =>

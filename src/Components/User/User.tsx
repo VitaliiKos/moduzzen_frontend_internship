@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 
 import css from './user.module.css';
 import {IUser} from '../../interfaces';
@@ -7,10 +7,20 @@ import {RouterEndpoints} from '../../routes';
 
 interface IProps {
     user: IUser,
+    children: React.ReactNode;
+    setUser_id?: React.Dispatch<React.SetStateAction<number | null>>,
+
 }
 
-const User: FC<IProps> = ({user}) => {
+const User: FC<IProps> = ({user, children, setUser_id}) => {
     const {id, username} = user;
+
+    useEffect(() => {
+        if (setUser_id) {
+            setUser_id(Number(id))
+        }
+    }, [id, setUser_id]);
+
     return (
 
         <div className={css.userWrapper}>
@@ -22,13 +32,15 @@ const User: FC<IProps> = ({user}) => {
                          className={css.profile}/>
                     <h2>{id}.{username}<span>Engineer</span></h2>
                     <div className={css.buttonWrapper}>
-                        <Link to={"#"} className={css.follow}>Follow</Link>
+                        {children}
                         <Link to={`/${RouterEndpoints.users}/${id}`} className={css.info}>Info</Link>
                     </div>
                 </figcaption>
             </figure>
+            <div></div>
         </div>
     );
 };
 
 export {User};
+

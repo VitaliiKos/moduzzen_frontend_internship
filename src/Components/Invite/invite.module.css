@@ -1,0 +1,7 @@
+.inviteItem{
+    border: 2px solid #356e14;
+    box-sizing: border-box;
+    padding: 5px;
+    background-color: azure;
+    border-radius: 15px;
+}

@@ -1,13 +1,18 @@
 .companyProfileWrapper {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
     box-sizing: border-box;
     padding: 40px 20px;
 }
+.companyDescribe{
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+}
 
 .company_img {
-    width: 50%;
+    width: 30%;
 }
 
 .company_img img {
@@ -16,4 +21,11 @@
 
 .companyProfileWrapper h4{
     margin: 5px;
+}
+.membersWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 80%;
+
 }
