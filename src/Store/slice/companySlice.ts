@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction, createAsyncThunk, isRejectedWithValue, isFulfilled} from "@reduxjs/toolkit";
 import {IError} from "../../interfaces/error.interface";
-import {ICompany, IPagination, IRequest} from '../../interfaces';
+import {ICompany, IMyCompany, IPagination, IRequest} from '../../interfaces';
 import {companyService} from '../../services';
 import {AxiosError} from "axios";
 
@@ -8,27 +8,31 @@ import {AxiosError} from "axios";
 interface IState {
     error: IError | null,
     companies: ICompany[],
+    myCompanies: IMyCompany[],
     selected_company: ICompany | null,
     companyForUpdate: ICompany | null,
     total_item: number,
     total_page: number,
     limit: number,
     skip: number,
-    company_role: string | null
+    company_role: string | null,
+    found_companies: IMyCompany[],
+
 
 }
 
 const initialState: IState = {
     error: {},
     companies: [],
+    myCompanies: [],
     selected_company: null,
     companyForUpdate: null,
     total_item: 0,
     total_page: 1,
     limit: 5,
     skip: 0,
-    company_role: ''
-
+    company_role: '',
+    found_companies: []
 
 }
 
@@ -58,7 +62,7 @@ const getById = createAsyncThunk<ICompany, { id: number }>(
     }
 )
 
-const getMyCompanies = createAsyncThunk<IPagination<ICompany[]>, { query: IRequest }>(
+const getMyCompanies = createAsyncThunk<IPagination<IMyCompany[]>, { query: IRequest }>(
     'companySlise/getMyCompanies',
     async ({query}, {rejectWithValue}) => {
         try {
@@ -70,6 +74,7 @@ const getMyCompanies = createAsyncThunk<IPagination<ICompany[]>, { query: IReque
         }
     }
 )
+
 export interface ICompanyRole {
     role: string
 }
@@ -124,6 +129,30 @@ const updateCompany = createAsyncThunk<void, { company: ICompany, id: number }>(
         }
     }
 )
+const updateCompanyStatus = createAsyncThunk<void, { company_id: number }>(
+    'companySlise/updateCompanyStatus',
+    async ({company_id}, {rejectWithValue}) => {
+        try {
+            await companyService.updateStatusById(company_id)
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response?.data)
+        }
+    }
+)
+const find_companies = createAsyncThunk<IPagination<IMyCompany[]>, { query: IRequest }>(
+    'companySlise/find_companies',
+    async ({query}, {rejectWithValue}) => {
+        try {
+            const {data} = await companyService.find_companies(query);
+            return data;
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
+
 
 const companySlise = createSlice({
     name: 'companySlise',
@@ -145,12 +174,10 @@ const companySlise = createSlice({
                 state.total_item = total_item;
                 state.total_page = total_page;
                 state.companyForUpdate = null;
-
-
             })
-            .addCase(getMyCompanies.fulfilled, (state, action: PayloadAction<IPagination<ICompany[]>>) => {
+            .addCase(getMyCompanies.fulfilled, (state, action: PayloadAction<IPagination<IMyCompany[]>>) => {
                 const {data, total_item, total_page} = action.payload;
-                state.companies = data;
+                state.myCompanies = data;
                 state.total_item = total_item;
                 state.total_page = total_page;
             })
@@ -161,6 +188,15 @@ const companySlise = createSlice({
                 const {role} = action.payload;
                 state.company_role = role;
             })
+            .addCase(find_companies.fulfilled, (state, action: PayloadAction<IPagination<IMyCompany[]>>) => {
+                const {data, total_item, total_page} = action.payload;
+                state.found_companies = data;
+
+                state.total_item = total_item
+                state.total_page = total_page
+                state.error = null;
+            })
+
             .addMatcher(isFulfilled(), state => {
                 state.error = null
             })
@@ -168,8 +204,6 @@ const companySlise = createSlice({
                 const errorPayload = action.payload as IError;
                 state.error = errorPayload;
             })
-
-
     }
 })
 
@@ -182,7 +216,9 @@ const companyActions = {
     creteCompany,
     getUserRole,
     deleteCompany,
-    updateCompany
+    updateCompany,
+    find_companies,
+    updateCompanyStatus
 };
 
 export {companyReducer, companyActions}

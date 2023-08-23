@@ -19,7 +19,7 @@ const CompanyCreateForm: FC<IProps> = ({onClose}) => {
     const {error, companyForUpdate} = useAppSelector(state => state.companyReducer);
 
     const {handleSubmit, setValue, formState: {errors, isValid}, register, reset} = useForm<ICompany>({
-        mode: 'all',
+        mode: 'onChange',
         resolver: joiResolver(companyValidator)
     });
 
@@ -48,8 +48,8 @@ const CompanyCreateForm: FC<IProps> = ({onClose}) => {
         if (requestStatus === 'fulfilled') {
             onClose()
 
-            navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}`);
-            dispatch(companyActions.getMyCompanies({query: {skip: 0}}));
+            navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}/${companyForUpdate!.id}`);
+            dispatch(companyActions.getById({id:Number(companyForUpdate!.id)}));
         }
         reset()
 

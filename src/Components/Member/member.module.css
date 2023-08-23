@@ -1,0 +1,73 @@
+.userWrapper {
+    width: 45%;
+    display: flex;
+    flex-wrap: nowrap;
+
+}
+.snip1336 {
+    font-family: 'Roboto', Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    width: 50%;
+    color: #ffffff;
+    text-align: left;
+    line-height: 1.4em;
+    background-color: #141414;
+}
+.snip1336 * {
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+}
+.snip1336 img {
+    max-width: 100%;
+    vertical-align: top;
+    opacity: 0.85;
+}
+.snip1336 figcaption {
+    width: 100%;
+    background-color: #141414;
+    padding: 5px;
+    position: relative;
+}
+.snip1336 figcaption:before {
+    position: absolute;
+    content: '';
+    bottom: 100%;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 55px 0 0 400px;
+    border-color: transparent transparent transparent #141414;
+}
+.snip1336 .profile {
+    border-radius: 50%;
+    position: absolute;
+    bottom: 100%;
+    left: 25px;
+    z-index: 1;
+    max-width: 90px;
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+.snip1336 .follow {
+    margin-right: 4%;
+    border-color: #2980b9;
+    color: #2980b9;
+}
+.snip1336 h2 {
+    margin: 0 0 5px;
+    font-weight: 300;
+}
+.snip1336 h2 span {
+    display: block;
+    font-size: 0.7em;
+    color: #2980b9;
+}
+.snip1336 p {
+    margin: 0 0 10px;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}

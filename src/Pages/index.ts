@@ -9,4 +9,9 @@ export * from './UserProfilePage/UserProfilePage';
 export * from './UserDetailPage/UserDetailPage';
 export * from './UsersListPage/UsersListPage';
 export * from './MyListCompanyPage/MyListCompanyPage';
-
+export * from './CompanyMembersPage/CompanyMembersPage';
+export * from './CompanyCandidatesPage/CompanyCandidatesPage';
+export * from './MyInvitesPage/MyInvitesPage';
+export * from './MyRequestPage/MyRequestPage';
+export * from './CompanyRequestPage/CompanyRequestPage';
+export * from './FindCompany/FindCompany';

@@ -2,14 +2,14 @@ import {FC, useEffect, useState} from 'react';
 
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {companyActions} from '../../Store/slice';
-import css from './myOwnListCompany.module.css';
 import {CompanyCreateForm, CompanyList, UniversalModalWindow} from '../../Components';
+import css from './myListCompanyPage.module.css';
 
 const MyListCompanyPage: FC = () => {
     const dispatch = useAppDispatch();
 
     const [isModalVisible, setModalVisible] = useState<boolean>(false);
-    const {companies, total_page, total_item, limit, skip} = useAppSelector((state) => state.companyReducer);
+    const {myCompanies, total_page, total_item, limit, skip} = useAppSelector((state) => state.companyReducer);
 
 
     useEffect(() => {
@@ -18,9 +18,11 @@ const MyListCompanyPage: FC = () => {
 
 
     return (
-        <div className={css.companyListWrapper}>
-            <CompanyList companies={companies} total_page={total_page} total_item={total_item}/>
-            <button onClick={() => setModalVisible(true)}>Create new company</button>
+        <div className={css.myCompanyListWrapper}>
+            <CompanyList companies={myCompanies} total_page={total_page} total_item={total_item} searc_status={false}/>
+            <div>
+                <button onClick={() => setModalVisible(true)}>Create new company</button>
+            </div>
 
 
             <UniversalModalWindow visible={isModalVisible} onClose={() => setModalVisible(false)}>

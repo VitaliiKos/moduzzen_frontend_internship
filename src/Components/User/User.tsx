@@ -1,16 +1,20 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 
 import css from './user.module.css';
 import {IUser} from '../../interfaces';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {RouterEndpoints} from '../../routes';
+import {ButtonInvite} from '..';
 
 interface IProps {
     user: IUser,
+
 }
 
 const User: FC<IProps> = ({user}) => {
     const {id, username} = user;
+    const {id: company_id} = useParams();
+
     return (
 
         <div className={css.userWrapper}>
@@ -22,13 +26,15 @@ const User: FC<IProps> = ({user}) => {
                          className={css.profile}/>
                     <h2>{id}.{username}<span>Engineer</span></h2>
                     <div className={css.buttonWrapper}>
-                        <Link to={"#"} className={css.follow}>Follow</Link>
                         <Link to={`/${RouterEndpoints.users}/${id}`} className={css.info}>Info</Link>
+                        <ButtonInvite company_id={company_id} user_id={Number(id)}/>
                     </div>
                 </figcaption>
             </figure>
+            <div></div>
         </div>
     );
 };
 
 export {User};
+
