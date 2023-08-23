@@ -52,11 +52,20 @@ class CompanyActivitiesService {
     acceptRequest(employee_id: number): IRes<void> {
         return apiService.get(mainUrls.invitation.accept_request(employee_id))
     }
+    userToAdmin(company_id: number, user_id: number): IRes<void> {
+        return apiService.get(mainUrls.invitation.userToAdmin(company_id, user_id))
+    }
+    adminToUser(company_id: number, user_id: number): IRes<void> {
+        return apiService.get(mainUrls.invitation.adminToUser(company_id, user_id))
+    }
     fired_from_the_company(comapny_id: number, user_id:number): IRes<void> {
         return apiService.get(mainUrls.invitation.fired_from_the_company(comapny_id, user_id))
     }
     leave_company(comapny_id: number): IRes<void> {
         return apiService.get(mainUrls.invitation.leave_company(comapny_id))
+    }
+    getCompanyAdmins(company_id: number,{skip = 0}: IRequest): IRes<IPagination<IMembers[]>> {
+        return apiService.get(mainUrls.invitation.admins(company_id), {params: {skip}})
     }
 
 }

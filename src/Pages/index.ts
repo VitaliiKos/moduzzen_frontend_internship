@@ -15,3 +15,4 @@ export * from './MyInvitesPage/MyInvitesPage';
 export * from './MyRequestPage/MyRequestPage';
 export * from './CompanyRequestPage/CompanyRequestPage';
 export * from './FindCompany/FindCompany';
+export * from './CompanyAdminsPage/CompanyAdminsPage';

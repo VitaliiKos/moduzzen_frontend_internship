@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const Company: FC<IProps> = ({company,searc_status}) => {
-    const {id, name, status} = company;
+    const {id, name} = company;
     const {skip} = useAppSelector(state => state.mainReducer);
     const dispatch = useAppDispatch();
 

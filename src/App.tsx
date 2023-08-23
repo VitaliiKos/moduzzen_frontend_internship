@@ -20,7 +20,8 @@ import {
     MyInvitesPage,
     MyRequestPage,
     CompanyRequestPage,
-    FindCompany
+    FindCompany,
+    CompanyAdminsPage
 } from './Pages';
 import {RouterEndpoints} from './routes';
 import {CompanyInvitationsPage} from './Pages/CompanyInvitationsPage/CompanyInvitationsPage';
@@ -61,6 +62,7 @@ const App: FC = () => {
                         <Route path={'company_candidates'} element={<CompanyCandidatesPage/>}/>
                         <Route path={'company_invites'} element={<CompanyInvitationsPage/>}/>
                         <Route path={'company_requests'} element={<CompanyRequestPage/>}/>
+                        <Route path={'company_admins'} element={<CompanyAdminsPage/>}/>
                     </Route>
 
                     <Route path={RouterEndpoints.company} element={<RequiredAuth><CompaniesListPage/></RequiredAuth>}/>

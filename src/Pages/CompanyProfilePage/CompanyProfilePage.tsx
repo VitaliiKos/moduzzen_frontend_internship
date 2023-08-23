@@ -3,7 +3,7 @@ import {Outlet, useParams} from 'react-router-dom';
 
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {companyActions} from '../../Store/slice';
-import {CompanyProfile, SwitchComponent} from '../../Components';
+import {CompanyProfile} from '../../Components';
 import {CompanyActions} from "../../Components/CompanyActions/CompanyActions";
 import css from './companyProfilePage.module.css';
 
