@@ -18,7 +18,9 @@ import {
     CompanyMembersPage,
     CompanyCandidatesPage,
     MyInvitesPage,
-    MyRequestPage
+    MyRequestPage,
+    CompanyRequestPage,
+    FindCompany
 } from './Pages';
 import {RouterEndpoints} from './routes';
 import {CompanyInvitationsPage} from './Pages/CompanyInvitationsPage/CompanyInvitationsPage';
@@ -42,22 +44,23 @@ const App: FC = () => {
                             <UserProfilePage/>
                         </RequiredAuth>
                     }/>
-                    {/************************************************/}
                     <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.myInvites}`} element={
                         <RequiredAuth><MyInvitesPage/></RequiredAuth>}/>
 
                     <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.myRequest}`} element={
                         <RequiredAuth><MyRequestPage/></RequiredAuth>}/>
 
-                    {/************************************************/}
                     <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}`} element={
                         <RequiredAuth><MyListCompanyPage/></RequiredAuth>}/>
+                    <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.findCompany}`} element={
+                        <RequiredAuth><FindCompany/></RequiredAuth>}/>
 
                     <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}/${RouterEndpoints.id}`}
                            element={<CompanyProfilePage/>}>
                         <Route path={'company_members'} element={<CompanyMembersPage/>}/>
                         <Route path={'company_candidates'} element={<CompanyCandidatesPage/>}/>
                         <Route path={'company_invites'} element={<CompanyInvitationsPage/>}/>
+                        <Route path={'company_requests'} element={<CompanyRequestPage/>}/>
                     </Route>
 
                     <Route path={RouterEndpoints.company} element={<RequiredAuth><CompaniesListPage/></RequiredAuth>}/>

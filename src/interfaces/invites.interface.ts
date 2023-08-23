@@ -1,15 +1,21 @@
-export interface IInvites {
-    id: number,
-    user_id: number,
-    company_id: number,
-    role: string,
-    invitation_status: string,
-    request_status: string,
-    created_at: Date
+export interface IMYInvites {
+    id: number
+    name: string
+    phone: string
+    email: string
+    status: boolean
+
+    employee_id: number
+    role: string
+    request_status: boolean
+    invitation_status: boolean
+
+    created_at: string
+    updated_at: string
 }
 
-export interface IInvitesList {
+export interface IMyInvitesList {
 
-    invitations_list:IInvites[]
+    invitations_list:IMYInvites[]
 }
 

@@ -2,24 +2,18 @@ import React, {FC, useEffect} from 'react';
 
 import css from './user.module.css';
 import {IUser} from '../../interfaces';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {RouterEndpoints} from '../../routes';
+import {ButtonInvite} from '..';
 
 interface IProps {
     user: IUser,
-    children: React.ReactNode;
-    setUser_id?: React.Dispatch<React.SetStateAction<number | null>>,
 
 }
 
-const User: FC<IProps> = ({user, children, setUser_id}) => {
+const User: FC<IProps> = ({user}) => {
     const {id, username} = user;
-
-    useEffect(() => {
-        if (setUser_id) {
-            setUser_id(Number(id))
-        }
-    }, [id, setUser_id]);
+    const {id: company_id} = useParams();
 
     return (
 
@@ -32,8 +26,8 @@ const User: FC<IProps> = ({user, children, setUser_id}) => {
                          className={css.profile}/>
                     <h2>{id}.{username}<span>Engineer</span></h2>
                     <div className={css.buttonWrapper}>
-                        {children}
                         <Link to={`/${RouterEndpoints.users}/${id}`} className={css.info}>Info</Link>
+                        <ButtonInvite company_id={company_id} user_id={Number(id)}/>
                     </div>
                 </figcaption>
             </figure>

@@ -1,21 +1,22 @@
 import {FC} from 'react';
 import {useSearchParams} from 'react-router-dom';
 
-import {IMYInvites} from '../../interfaces';
+import {Member} from '..';
+import {IMembers} from '../../interfaces/members.interface';
 import {useAppDispatch} from '../../hooks';
 import {mainAction} from '../../Store/slice';
-import {Invite, PaginationItem} from '..';
-import css from './inviteList.module.css'
-
+import {PaginationItem} from '../PaginationItem/PaginationItem';
+import css from './memberList.module.css';
 
 interface IProps {
-    invites: IMYInvites[] ,
+    members: IMembers[],
     total_item: number,
     total_page: number,
-    current_company_id: number|null,
+    company_id: number,
 }
 
-const InviteList: FC<IProps> = ({invites, total_item, total_page, current_company_id}) => {
+const MembersList: FC<IProps> = ({members, total_page, total_item, company_id}) => {
+
     const dispatch = useAppDispatch();
 
     const [query] = useSearchParams({page: '1'});
@@ -28,17 +29,17 @@ const InviteList: FC<IProps> = ({invites, total_item, total_page, current_compan
     }
 
     return (
-        <div>
+        <>
             <PaginationItem total_page={total_page} total_item={total_item} current_page={current_page}
                             selectedPage={selectedPage}
             />
-            <div className={css.inviteWrapper}>
+            <div className={css.memberListWrapper}>
                 {
-                    invites.map(invite => <Invite key={invite.id} invite={invite} current_company_id={current_company_id}/>)
+                    members.map(member => <Member key={member.id} member={member} company_id={company_id}/>)
                 }
             </div>
-        </div>
+        </>
     );
 };
 
-export {InviteList};
+export {MembersList};

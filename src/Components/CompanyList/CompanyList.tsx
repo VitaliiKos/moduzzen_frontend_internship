@@ -2,18 +2,20 @@ import {FC} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {useSearchParams} from 'react-router-dom';
 import {companyActions} from '../../Store/slice';
-import {ICompany} from '../../interfaces';
+import {ICompany, IMyCompany} from '../../interfaces';
 import {Company} from '../Company/Company';
 import {PaginationItem} from '../PaginationItem/PaginationItem';
 import css from './companyList.module.css';
 
 interface IProps {
-    companies: ICompany[],
+    companies: ICompany[] | IMyCompany[],
     total_item: number,
-    total_page: number
+    total_page: number,
+    searc_status: boolean
+
 }
 
-const CompanyList: FC<IProps> = ({companies, total_item, total_page}) => {
+const CompanyList: FC<IProps> = ({companies, total_item, total_page, searc_status}) => {
     const dispatch = useAppDispatch();
 
     const [query] = useSearchParams({page: '1'});
@@ -35,7 +37,7 @@ const CompanyList: FC<IProps> = ({companies, total_item, total_page}) => {
             </div>
             <div className={css.companyList}>
                 {
-                    companies.map(company => <Company key={company.id} company={company}/>)
+                    companies.map(company => <Company key={company.id} company={company} searc_status={searc_status}/>)
                 }
             </div>
         </div>

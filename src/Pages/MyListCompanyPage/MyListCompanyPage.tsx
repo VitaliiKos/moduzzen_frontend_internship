@@ -9,7 +9,7 @@ const MyListCompanyPage: FC = () => {
     const dispatch = useAppDispatch();
 
     const [isModalVisible, setModalVisible] = useState<boolean>(false);
-    const {companies, total_page, total_item, limit, skip} = useAppSelector((state) => state.companyReducer);
+    const {myCompanies, total_page, total_item, limit, skip} = useAppSelector((state) => state.companyReducer);
 
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const MyListCompanyPage: FC = () => {
 
     return (
         <div className={css.myCompanyListWrapper}>
-            <CompanyList companies={companies} total_page={total_page} total_item={total_item}/>
+            <CompanyList companies={myCompanies} total_page={total_page} total_item={total_item} searc_status={false}/>
             <div>
                 <button onClick={() => setModalVisible(true)}>Create new company</button>
             </div>

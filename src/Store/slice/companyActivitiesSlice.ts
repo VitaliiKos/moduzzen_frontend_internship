@@ -1,20 +1,23 @@
-import {PayloadAction, createAsyncThunk, createSlice, isRejectedWithValue} from "@reduxjs/toolkit";
+import {PayloadAction, createAsyncThunk, createSlice, isFulfilled, isRejectedWithValue} from "@reduxjs/toolkit";
 import {IUser, IPagination, IRequest, IError} from "../../interfaces";
 import {AxiosError} from "axios";
 import {companyActivitiesService} from "../../services";
-import {IInvites} from "../../interfaces/invites.interface";
+import {IMYInvites} from "../../interfaces/invites.interface";
+import {IMembers} from "../../interfaces/members.interface";
 
 
 interface IState {
-    members: IUser[]
+    members: IMembers[]
     candidates: IUser[],
     total_item: number,
     total_page: number,
     limit: number,
     skip: number,
     error: IError | null,
-    invites: IInvites[],
-    requests: IInvites[]
+    invites: IMYInvites[],
+    requests: IMYInvites[],
+    company_invites: IMembers[],
+    company_requests: IMembers[],
 
 
 }
@@ -28,11 +31,13 @@ const initialState: IState = {
     skip: 0,
     error: null,
     invites: [],
-    requests: []
+    requests: [],
+    company_invites: [],
+    company_requests: [],
 }
 
 
-const getMembers = createAsyncThunk<IPagination<IUser[]>, {
+const getMembers = createAsyncThunk<IPagination<IMembers[]>, {
     company_id: number,
     query: IRequest
 }>(
@@ -77,9 +82,20 @@ const sendInviteFromCompany = createAsyncThunk<void, {
         }
     }
 )
+const sendRequestFromUser = createAsyncThunk<void, { company_id: number }>(
+    'companyActivitiesSlice/sendRequestFromUser',
+    async ({company_id}, {rejectWithValue}) => {
+        try {
+            await companyActivitiesService.sendRequest(company_id);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
 
 
-const getCompanyInvites = createAsyncThunk<IPagination<IInvites[]>, {
+const getCompanyInvites = createAsyncThunk<IPagination<IMembers[]>, {
     company_id: number,
     query: IRequest
 }>(
@@ -95,7 +111,24 @@ const getCompanyInvites = createAsyncThunk<IPagination<IInvites[]>, {
     }
 )
 
-const getMyInvites = createAsyncThunk<IPagination<IInvites[]>, {
+const getCompanyRequests = createAsyncThunk<IPagination<IMembers[]>, {
+    company_id: number,
+    query: IRequest
+}>(
+    'companyActivitiesSlice/getCompanyRequests',
+    async ({query, company_id}, {rejectWithValue}) => {
+        try {
+            const {data} = await companyActivitiesService.getCompanyRequests(company_id, query);
+            return data;
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
+
+
+const getMyInvites = createAsyncThunk<IPagination<IMYInvites[]>, {
     query: IRequest
 }>(
     'companyActivitiesSlice/getMyInvites',
@@ -110,7 +143,7 @@ const getMyInvites = createAsyncThunk<IPagination<IInvites[]>, {
     }
 )
 
-const getMyRequests = createAsyncThunk<IPagination<IInvites[]>, {
+const getMyRequests = createAsyncThunk<IPagination<IMYInvites[]>, {
     query: IRequest
 }>(
     'companyActivitiesSlice/getMyRequests',
@@ -159,11 +192,57 @@ const rejectInvite = createAsyncThunk<void, { employee_id: number }>(
         }
     }
 )
+const rejectRequest = createAsyncThunk<void, { employee_id: number }>(
+    'companyActivitiesSlice/rejectRequest',
+    async ({employee_id}, {rejectWithValue}) => {
+        try {
+            await companyActivitiesService.rejectRequest(employee_id);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
 const acceptInvite = createAsyncThunk<void, { employee_id: number }>(
     'companyActivitiesSlice/acceptInvite',
     async ({employee_id}, {rejectWithValue}) => {
         try {
             await companyActivitiesService.acceptInvite(employee_id);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
+const acceptRequest = createAsyncThunk<void, { employee_id: number }>(
+    'companyActivitiesSlice/acceptRequest',
+    async ({employee_id}, {rejectWithValue}) => {
+        try {
+            await companyActivitiesService.acceptRequest(employee_id);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
+
+const fired_from_the_company = createAsyncThunk<void, { company_id: number, user_id: number }>(
+    'companyActivitiesSlice/fired_from_the_company',
+    async ({company_id, user_id}, {rejectWithValue}) => {
+        try {
+            await companyActivitiesService.fired_from_the_company(company_id, user_id);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
+
+const leave_company = createAsyncThunk<void, { company_id: number }>(
+    'companyActivitiesSlice/leave_company',
+    async ({company_id}, {rejectWithValue}) => {
+        try {
+            await companyActivitiesService.leave_company(company_id);
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response?.data);
@@ -178,7 +257,7 @@ const companyActivitiesSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder
-            .addCase(getMembers.fulfilled, (state, action: PayloadAction<IPagination<IUser[]>>) => {
+            .addCase(getMembers.fulfilled, (state, action: PayloadAction<IPagination<IMembers[]>>) => {
                 const {data, total_item, total_page} = action.payload;
                 state.candidates = [];
                 state.members = data;
@@ -197,7 +276,25 @@ const companyActivitiesSlice = createSlice({
                 state.total_page = total_page
                 state.error = null;
             })
-            .addCase(getCompanyInvites.fulfilled, (state, action: PayloadAction<IPagination<IInvites[]>>) => {
+            .addCase(getCompanyInvites.fulfilled, (state, action: PayloadAction<IPagination<IMembers[]>>) => {
+                const {data, total_item, total_page} = action.payload;
+                state.company_invites = data;
+
+
+                state.total_item = total_item
+                state.total_page = total_page
+                state.error = null;
+            })
+            .addCase(getCompanyRequests.fulfilled, (state, action: PayloadAction<IPagination<IMembers[]>>) => {
+                const {data, total_item, total_page} = action.payload;
+                state.company_requests = data;
+
+
+                state.total_item = total_item
+                state.total_page = total_page
+                state.error = null;
+            })
+            .addCase(getMyInvites.fulfilled, (state, action: PayloadAction<IPagination<IMYInvites[]>>) => {
                 const {data, total_item, total_page} = action.payload;
 
                 state.invites = data;
@@ -206,16 +303,7 @@ const companyActivitiesSlice = createSlice({
                 state.total_page = total_page
                 state.error = null;
             })
-            .addCase(getMyInvites.fulfilled, (state, action: PayloadAction<IPagination<IInvites[]>>) => {
-                const {data, total_item, total_page} = action.payload;
-
-                state.invites = data;
-
-                state.total_item = total_item
-                state.total_page = total_page
-                state.error = null;
-            })
-            .addCase(getMyRequests.fulfilled, (state, action: PayloadAction<IPagination<IInvites[]>>) => {
+            .addCase(getMyRequests.fulfilled, (state, action: PayloadAction<IPagination<IMYInvites[]>>) => {
                 const {data, total_item, total_page} = action.payload;
 
                 state.requests = data;
@@ -223,6 +311,9 @@ const companyActivitiesSlice = createSlice({
                 state.total_item = total_item
                 state.total_page = total_page
                 state.error = null;
+            })
+            .addMatcher(isFulfilled(), state => {
+                state.error = null
             })
             .addMatcher(isRejectedWithValue(), (state: IState, action) => {
                 const errorPayload = action.payload as IError;
@@ -245,7 +336,13 @@ const companyActivitiesActions = {
     rejectInvite,
     acceptInvite,
     getMyRequests,
-    cancelUserRequest
+    cancelUserRequest,
+    getCompanyRequests,
+    rejectRequest,
+    acceptRequest,
+    fired_from_the_company,
+    sendRequestFromUser,
+    leave_company
 };
 
 export {companyActivitiesReducer, companyActivitiesActions}

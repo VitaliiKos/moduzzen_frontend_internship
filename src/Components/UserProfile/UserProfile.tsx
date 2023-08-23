@@ -44,6 +44,9 @@ const UserProfile: FC<IProps> = ({me}) => {
                     <button onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myRequest}`)}>Show
                         my requests
                     </button>
+                    <button onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.findCompany}`)}>Find
+                        Company
+                    </button>
                 </div>
             </div>
             <div className={css.profileAvatar}>

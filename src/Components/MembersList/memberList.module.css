@@ -1,0 +1,8 @@
+.memberListWrapper{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-around;
+}

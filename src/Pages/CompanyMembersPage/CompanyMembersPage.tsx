@@ -3,7 +3,7 @@ import {useParams, useSearchParams} from 'react-router-dom';
 
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {companyActivitiesActions} from '../../Store/slice';
-import {UsersList} from '../../Components';
+import {MembersList} from '../../Components';
 
 
 const CompanyMembersPage: FC = () => {
@@ -23,9 +23,10 @@ const CompanyMembersPage: FC = () => {
 
     return (
         <>
-            <UsersList users={members} total_item={total_item} total_page={total_page}/>
+            <MembersList members={members} total_item={total_item} total_page={total_page} company_id={Number(id)}/>
         </>
     );
 };
 
 export {CompanyMembersPage};
+

@@ -12,7 +12,7 @@
 .userOptionsButton{
     display: flex;
     flex-wrap: nowrap;
-    gap: 20px;
+    gap: 10px;
     justify-content: space-around;
 }
 
@@ -21,9 +21,9 @@
     flex-wrap: nowrap;
     width: 95%;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 5px;
     margin: 5px;
 }
 .formButtonWrapper button, .userOptionsButton button {
@@ -34,7 +34,7 @@
     cursor: pointer;
     display: inline-block;
     font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
-    padding: 5px 10px;
+    padding: 7px ;
     text-align: center;
     text-decoration: none;
     transition: all 250ms;

@@ -1,4 +1,4 @@
-import {Dispatch, FC, SetStateAction} from 'react';
+import {FC} from 'react';
 import {useSearchParams} from 'react-router-dom';
 
 import {IUser} from '../../interfaces';
@@ -12,11 +12,9 @@ interface IProps {
     users: IUser[],
     total_item: number,
     total_page: number,
-    setUser_id?: Dispatch<SetStateAction<number| null>>,
-    children?: React.ReactNode,
 }
 
-const UsersList: FC<IProps> = ({users, total_page, total_item, children, setUser_id}) => {
+const UsersList: FC<IProps> = ({users, total_page, total_item}) => {
     const dispatch = useAppDispatch();
 
     const [query] = useSearchParams({page: '1'});
@@ -35,7 +33,7 @@ const UsersList: FC<IProps> = ({users, total_page, total_item, children, setUser
             />
             <div className={css.userListWrapper}>
                 {
-                    users.map(user => <User key={user.id} user={user} children={children} setUser_id={setUser_id}/>)
+                    users.map(user => <User key={user.id} user={user} />)
                 }
             </div>
         </div>
