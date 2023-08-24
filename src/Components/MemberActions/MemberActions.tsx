@@ -42,6 +42,14 @@ const MemberActions: FC<IProps> = ({employee_id, company_id, role, invitation_st
         setSelectedAction('acceptRequest');
         setModalVisible(true);
     };
+    const userToAdmin = async () => {
+        setSelectedAction('userToAdmin');
+        setModalVisible(true);
+    };
+    const adminToUser = async () => {
+        setSelectedAction('adminToUser');
+        setModalVisible(true);
+    };
     const handleConfirmation = async () => {
         switch (selectedAction) {
             case 'firedFromTheCompany':
@@ -60,6 +68,14 @@ const MemberActions: FC<IProps> = ({employee_id, company_id, role, invitation_st
                 await dispatch(companyActivitiesActions.acceptRequest({employee_id}));
                 dispatch(companyActivitiesActions.getCompanyRequests({company_id: Number(company_id), query: {skip}}));
                 break;
+            case 'userToAdmin':
+                await dispatch(companyActivitiesActions.userToAdmin({user_id, company_id}));
+                dispatch(companyActivitiesActions.getMembers({company_id: Number(company_id), query: {skip}}));
+                break;
+            case 'adminToUser':
+                await dispatch(companyActivitiesActions.adminToUser({user_id, company_id}));
+                dispatch(companyActivitiesActions.getMembers({company_id: Number(company_id), query: {skip}}));
+                break;
             default:
                 break;
         }
@@ -75,7 +91,7 @@ const MemberActions: FC<IProps> = ({employee_id, company_id, role, invitation_st
         case 'Owner':
             return (
                 <div className={css.buttonWrapper}>
-                    <Link to='#'>Some Action</Link>
+                    <Link to='#' >Show Admins</Link>
                     <Link to='#'>Some Action</Link>
                     <Link to='#'>Some actions</Link>
                 </div>
@@ -111,7 +127,18 @@ const MemberActions: FC<IProps> = ({employee_id, company_id, role, invitation_st
         case 'Member':
             return (
                 <div className={css.buttonWrapper}>
+                    <Link to='#' onClick={() => userToAdmin()}>To admin</Link>
+                    <Link to='#' onClick={() => firedFromTheCompany()}>Fired from the company</Link>
                     <Link to='#'>Some actions</Link>
+                    <UniversalModalWindow visible={isModalVisible} onClose={() => setModalVisible(false)}>
+                        <ActionConfirmation onClose={() => setModalVisible(false)} handleYes={handleConfirmation}/>
+                    </UniversalModalWindow>
+                </div>
+            );
+        case 'Admin':
+            return (
+                <div className={css.buttonWrapper}>
+                    <Link to='#' onClick={() => adminToUser()}>Back to user</Link>
                     <Link to='#' onClick={() => firedFromTheCompany()}>Fired from the company</Link>
                     <Link to='#'>Some actions</Link>
                     <UniversalModalWindow visible={isModalVisible} onClose={() => setModalVisible(false)}>

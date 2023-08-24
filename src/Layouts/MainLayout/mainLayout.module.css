@@ -37,8 +37,8 @@
 
 .content {
     width: 100%;
-    overflow: hidden;
-    overflow-y: auto;
+    /*overflow: hidden;*/
+    /*overflow-y: auto;*/
     box-sizing: border-box;
     margin: 60px 0;
 }

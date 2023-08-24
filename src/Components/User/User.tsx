@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 
 import css from './user.module.css';
 import {IUser} from '../../interfaces';

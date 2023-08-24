@@ -83,7 +83,7 @@ const UserInviteRequestActions: FC<IProps> = ({request_status, invitation_status
     }, [isModalVisible]);
 
     return (
-        <div>
+        <>
             {
                 (current_company_id || request_status) ?
                     <>
@@ -109,7 +109,7 @@ const UserInviteRequestActions: FC<IProps> = ({request_status, invitation_status
                                     handleYes={handleConfirmation}/>
             </UniversalModalWindow>
 
-        </div>
+        </>
     );
 };
 

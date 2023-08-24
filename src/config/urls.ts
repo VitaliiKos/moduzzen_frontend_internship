@@ -43,8 +43,11 @@ const mainUrls = {
         reject_request: (action_id: number) => `${invitation}/${action_id}/reject_request`,
         accept_invite: (action_id: number) => `${invitation}/${action_id}/accept_invite`,
         accept_request: (action_id: number) => `${invitation}/${action_id}/accept_request`,
+        userToAdmin: (company_id: number, user_id: number) => `${invitation}/company/${company_id}/${user_id}/add_to_admin`,
+        adminToUser: (company_id: number, user_id: number) => `${invitation}/company/${company_id}/${user_id}/remove_from_admin`,
         fired_from_the_company: (company_id: number, user_id: number) => `${invitation}/${company_id}/dismiss_employee/${user_id}`,
-        leave_company: (company_id: number) => `${invitation}/${company_id}/leave_company/`,
+        leave_company: (company_id: number) => `${invitation}/${company_id}/leave_company`,
+        admins: (company_id: number) => `${invitation}/action/${company_id}/get_list_of_admins`,
 
     },
     healthCheck: {

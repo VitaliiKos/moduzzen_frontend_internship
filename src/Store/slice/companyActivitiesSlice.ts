@@ -8,6 +8,7 @@ import {IMembers} from "../../interfaces/members.interface";
 
 interface IState {
     members: IMembers[]
+    admins: IMembers[]
     candidates: IUser[],
     total_item: number,
     total_page: number,
@@ -24,6 +25,7 @@ interface IState {
 
 const initialState: IState = {
     members: [],
+    admins: [],
     candidates: [],
     total_item: 0,
     total_page: 1,
@@ -226,6 +228,30 @@ const acceptRequest = createAsyncThunk<void, { employee_id: number }>(
     }
 )
 
+const userToAdmin = createAsyncThunk<void, { company_id: number, user_id: number }>(
+    'companyActivitiesSlice/userToAdmin',
+    async ({user_id, company_id}, {rejectWithValue}) => {
+        try {
+            await companyActivitiesService.userToAdmin(company_id, user_id);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
+
+const adminToUser = createAsyncThunk<void, { company_id: number, user_id: number }>(
+    'companyActivitiesSlice/adminToUser',
+    async ({user_id, company_id}, {rejectWithValue}) => {
+        try {
+            await companyActivitiesService.adminToUser(company_id, user_id);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
+
 const fired_from_the_company = createAsyncThunk<void, { company_id: number, user_id: number }>(
     'companyActivitiesSlice/fired_from_the_company',
     async ({company_id, user_id}, {rejectWithValue}) => {
@@ -243,6 +269,22 @@ const leave_company = createAsyncThunk<void, { company_id: number }>(
     async ({company_id}, {rejectWithValue}) => {
         try {
             await companyActivitiesService.leave_company(company_id);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
+
+const getCompanyAdmins = createAsyncThunk<IPagination<IMembers[]>, {
+    company_id: number,
+    query: IRequest
+}>(
+    'companyActivitiesSlice/getCompanyAdmins',
+    async ({company_id, query}, {rejectWithValue}) => {
+        try {
+            const {data} = await companyActivitiesService.getCompanyAdmins(company_id, query);
+            return data;
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response?.data);
@@ -312,6 +354,16 @@ const companyActivitiesSlice = createSlice({
                 state.total_page = total_page
                 state.error = null;
             })
+            .addCase(getCompanyAdmins.fulfilled, (state, action: PayloadAction<IPagination<IMembers[]>>) => {
+                const {data, total_item, total_page} = action.payload;
+                state.admins = data;
+
+                state.total_item = total_item;
+                state.total_page = total_page;
+                state.error = null;
+
+            })
+
             .addMatcher(isFulfilled(), state => {
                 state.error = null
             })
@@ -342,7 +394,10 @@ const companyActivitiesActions = {
     acceptRequest,
     fired_from_the_company,
     sendRequestFromUser,
-    leave_company
+    leave_company,
+    userToAdmin,
+    adminToUser,
+    getCompanyAdmins
 };
 
 export {companyActivitiesReducer, companyActivitiesActions}

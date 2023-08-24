@@ -35,16 +35,16 @@ const UserProfile: FC<IProps> = ({me}) => {
                     </button>
                 </div>
                 <div className={css.userOptionsButton}>
-                    <button onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}`)}>Show
+                    <button className={css.userButtonAction} onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}`)}>Show
                         my companies
                     </button>
-                    <button onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myInvites}`)}>Show
+                    <button className={css.userButtonAction} onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myInvites}`)}>Show
                         my invitations
                     </button>
-                    <button onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myRequest}`)}>Show
+                    <button className={css.userButtonAction} onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myRequest}`)}>Show
                         my requests
                     </button>
-                    <button onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.findCompany}`)}>Find
+                    <button className={css.userButtonAction} onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.findCompany}`)}>Find
                         Company
                     </button>
                 </div>
