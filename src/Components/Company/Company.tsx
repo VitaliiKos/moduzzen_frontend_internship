@@ -8,10 +8,10 @@ import {companyActions, companyActivitiesActions} from '../../Store/slice';
 
 interface IProps {
     company: IMyCompany | ICompany,
-    searc_status: boolean
+    search_status: boolean
 }
 
-const Company: FC<IProps> = ({company,searc_status}) => {
+const Company: FC<IProps> = ({company,search_status}) => {
     const {id, name} = company;
     const {skip} = useAppSelector(state => state.mainReducer);
     const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ const Company: FC<IProps> = ({company,searc_status}) => {
                     <h2>{id}.{name}{('role' in company) && <span>{company.role}</span>}</h2>
                     <div className={css.buttonWrapper}>
                         <Link to={`/company/${id}`} className={css.info}>Info</Link>
-                        {(!('role' in company )&& searc_status) &&
+                        {(!('role' in company )&& search_status) &&
                             <Link to={'#'} onClick={() => send_request(Number(id))}>Request</Link>}
                     </div>
                 </figcaption>

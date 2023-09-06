@@ -18,7 +18,7 @@ const CompaniesListPage: FC = () => {
 
     return (
         <div className={css.companyListWrapper}>
-            <CompanyList companies={companies} total_page={total_page} total_item={total_item} searc_status={false}/>
+            <CompanyList companies={companies} total_page={total_page} total_item={total_item} search_status={false}/>
         </div>
     );
 };

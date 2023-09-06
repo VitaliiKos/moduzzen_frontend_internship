@@ -18,7 +18,7 @@ const FindCompany: FC = () => {
     }, [dispatch, query, skip, id]);
     return (
         <div>
-            <CompanyList companies={found_companies} total_page={total_page} total_item={total_item} searc_status={true}/>
+            <CompanyList companies={found_companies} total_page={total_page} total_item={total_item} search_status={true}/>
         </div>
     );
 };

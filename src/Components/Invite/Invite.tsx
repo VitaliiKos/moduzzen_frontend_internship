@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const Invite: FC<IProps> = ({invite, current_company_id}) => {
-    const {id, employee_id, email, phone, name, invitation_status, request_status, created_at, role} = invite;
+    const {id, employee_id, name, invitation_status, request_status, role} = invite;
 
 
     return (

@@ -1,0 +1,135 @@
+.quizDetailPage {
+    position: absolute;
+    box-sizing: border-box;
+    top: 80px;
+    left: 5vw;
+    border-radius: 15px;
+    border: 2px solid silver;
+    background-color: rgba(232, 233, 234, 0.94);
+    width: fit-content;
+    z-index: 4;
+}
+
+.quizForm {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.quizQuestion {
+    width: 15%;
+}
+
+.buttonSubmitWrapper {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+.buttonSubmit {
+    width: 60%;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, #cedce7 0%, #596a72 100%);
+    box-sizing: border-box;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.buttonSubmit:hover {
+    background: linear-gradient(to bottom, #596a72 100%, #cedce7 0%);
+    color: snow;
+
+}
+
+.choseInputWrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.quizWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    min-height: 75vh;
+}
+
+.quizWrapper h2 {
+    margin: 25px 0;
+    font: 14px Georgia, Serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.quizWrapper input {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.quizWrapper ol {
+    margin: 0 0 10px 20px;
+}
+
+.quizWrapper ol li {
+    margin: 0 0 20px 0;
+    list-style-type: none;
+}
+
+.quizWrapper ol li div {
+    padding: 4px 0;
+}
+
+.quizWrapper h3 {
+    font-size: 17px;
+    margin: 0 0 1px 0;
+    color: #666;
+}
+
+#results {
+    font: 44px Georgia, Serif;
+}
+
+.editQuizItem, .editQuizItemQuestion {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    /*gap: 10px;*/
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.editQuizItem i, .editQuizItemQuestion i {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.editQuizItem h2, .editQuizItem h3, .editQuizItemQuestion h2, .editQuizItemQuestion h3 {
+    margin: 5px;
+}
+
+
+.editQuizItemQuestion {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 5px;
+}
+
+.quizTitleBlock {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+ol>li>div{
+    background-color: silver;
+}
+
+i .hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}

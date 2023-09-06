@@ -91,7 +91,7 @@ const MemberActions: FC<IProps> = ({employee_id, company_id, role, invitation_st
         case 'Owner':
             return (
                 <div className={css.buttonWrapper}>
-                    <Link to='#' >Show Admins</Link>
+                    <Link to='#' >Some actions</Link>
                     <Link to='#'>Some Action</Link>
                     <Link to='#'>Some actions</Link>
                 </div>

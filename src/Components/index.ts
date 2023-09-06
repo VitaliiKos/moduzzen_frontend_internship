@@ -28,3 +28,10 @@ export * from './MemberActions/MemberActions';
 export * from './UserInviteRequestActions/UserInviteRequestActions';
 export * from './ActionConfirmation/ActionConfirmation';
 export * from './SwitchComponent/SwitchComponent';
+export * from './QuizzesList/QuizzesList';
+export * from './Quiz/Quiz';
+export * from './QuizDetail/QuizDetail';
+export * from './QuizActions/QuizActions';
+export * from './QuizForm/QuizForm';
+export * from './QuizForUpdate/QuizForUpdate';
+

@@ -25,7 +25,7 @@ const UserDetailPage: FC = () => {
 
     return (
         <div>
-            <ButtonNavigate navigate_params={`/${RouterEndpoints.users}`}/>
+            <ButtonNavigate navigate_params={`/${RouterEndpoints.users}`} button_title={'X'}/>
             <h3>{selected_user.id}. {selected_user.username}</h3>
             <h3>Email: {selected_user.email}</h3>
             <h3>Age: {selected_user.age}</h3>

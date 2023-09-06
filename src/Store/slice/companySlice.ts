@@ -194,9 +194,7 @@ const companySlise = createSlice({
 
                 state.total_item = total_item
                 state.total_page = total_page
-                state.error = null;
             })
-
             .addMatcher(isFulfilled(), state => {
                 state.error = null
             })
