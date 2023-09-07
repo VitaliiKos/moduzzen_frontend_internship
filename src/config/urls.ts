@@ -62,6 +62,8 @@ const mainUrls = {
         updateAnswer: (answer_id: number, question_id:number) => `${quizzes}/question/${question_id}/answer/${answer_id}`,
         deleteAnswer: (answer_id: number, quiz_id:number) => `${quizzes}/question/${quiz_id}/answer/${answer_id}`,
         deleteQuestion: (question_id: number, quiz_id:number) => `${quizzes}/${quiz_id}/question/${question_id}`,
+        createQuestion: (quiz_id:number) => `${quizzes}/${quiz_id}/question/`,
+        createAnswer: (question_id:number) => `${quizzes}/question/${question_id}/answer`,
 
     },
     healthCheck: {

@@ -34,4 +34,9 @@ export * from './QuizDetail/QuizDetail';
 export * from './QuizActions/QuizActions';
 export * from './QuizForm/QuizForm';
 export * from './QuizForUpdate/QuizForUpdate';
-
+export * from './QuizQuestion/QuizQuestion';
+export * from './QuizQuestionAnswer/QuizQuestionAnswer';
+export * from './QuizQuestionCreate/QuizQuestionCreate';
+export * from './QuizAnswerCreate/QuizAnswerCreate';
+export * from './QuizQuestionCreateForm/QuizQuestionCreateForm';
+export * from './QuizAnswerCreateForm/QuizAnswerCreateForm';

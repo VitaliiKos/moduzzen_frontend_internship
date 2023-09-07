@@ -1,8 +1,15 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
+import {SubmitHandler, useForm} from 'react-hook-form';
 
-import {ButtonNavigate, FormInput, QuizForUpdate, UniversalModalWindow} from '..';
+import {
+    ButtonNavigate,
+    QuizAnswerCreateForm,
+    QuizForUpdate,
+    QuizQuestion,
+    QuizQuestionCreateForm,
+    UniversalModalWindow
+} from '..';
 import {RouterEndpoints} from '../../routes';
-import css from './quizDetail.module.css';
 import {
     IAnswerData,
     IQquestionData,
@@ -10,9 +17,10 @@ import {
     IQuizFullResponse,
     IVoteDataRequest
 } from '../../interfaces/quiz.interface';
-import {SubmitHandler, useForm} from 'react-hook-form';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {quizActions} from '../../Store/slice';
+import css from './quizDetail.module.css';
+import {useNavigate} from 'react-router-dom';
 
 interface IProps {
     selected_quiz: IQuizFullResponse
@@ -21,6 +29,8 @@ interface IProps {
 const QuizDetail: FC<IProps> = ({selected_quiz}) => {
     const [isModalVisible, setModalVisible] = useState<boolean>(false);
     const [quizItemForUpdate, setQuizItemForUpdate] = useState<IQuizData | IAnswerData | IQquestionData | null>(null);
+    const navigate = useNavigate();
+    const {skip} = useAppSelector(state => state.mainReducer);
 
     const {
         id,
@@ -31,7 +41,7 @@ const QuizDetail: FC<IProps> = ({selected_quiz}) => {
         questions
     } = selected_quiz
     const dispatch = useAppDispatch();
-    const {user_current_quiz_vote, error} = useAppSelector(state => state.quizReducer);
+    const {user_current_quiz_vote, question_id_for_add_answer, error} = useAppSelector(state => state.quizReducer);
     const {handleSubmit, formState: {errors}, register, reset} = useForm<IQuizFullResponse>();
 
     const quizVotting: SubmitHandler<object> = async (data) => {
@@ -72,7 +82,15 @@ const QuizDetail: FC<IProps> = ({selected_quiz}) => {
         await dispatch(quizActions.deleteQuizQuestion({quiz_id, question_id}))
         dispatch(quizActions.getQuizById({quiz_id: Number(quiz_id)}))
     }
+    const delQuiz = async (quiz_id: number) => {
+        await dispatch(quizActions.deleteQuiz(quiz_id))
+        await dispatch(quizActions.getCompanyQuizzes({company_id: Number(id), query: {skip}}));
+        navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}/${company_id}/company_quizzes`)
+    }
 
+    useEffect(() => {
+
+    }, [quizItemForUpdate]);
     return (
         <div className={css.quizDetailPage}>
             <div onClick={() => reset_user_vote()}><ButtonNavigate
@@ -92,57 +110,30 @@ const QuizDetail: FC<IProps> = ({selected_quiz}) => {
                 <div className={css.quizWrapper}>
                     <div className={css.quizTitleBlock}>
                         <div className={css.editQuizItem}>
-                            <h2>{id}</h2>
                             <h2>{title}</h2>
                             <h3>{description}</h3>
                             <h3>{frequency_in_days}</h3>
                         </div>
-                        <div>
-                            <i className="fa-solid fa-pen"
-                               onClick={() => editQuiz({quiz: {title, description, frequency_in_days}})}></i>
-                            <i className="fa-solid fa-trash-can"></i>
+                        <div className={css.ActionIcon}>
+                            <div className={css.updateIcon}>
+                                <i className="fa-solid fa-pen"
+                                   onClick={() => editQuiz({quiz: {title, description, frequency_in_days}})}></i>
+                            </div>
+                            <div className={css.delIcon}>
+                                <i className="fa-solid fa-trash-can" onClick={() => delQuiz(id)}></i>
+                            </div>
                         </div>
                     </div>
-                    <form onSubmit={handleSubmit(quizVotting)} className={css.quizForm}>
-                        {questions.map(question =>
-                            <ol className={css.quizQuestion} key={question.id}>
-                                <li>
-                                    <div className={css.editQuizItemQuestion}>
-                                        <h3>{question.question_text}</h3>
-                                        <i className="fa-solid fa-pen"
-                                           onClick={() => editQuiz({
-                                               question: {question_text: question.question_text},
-                                               question_id: question.id
-                                           })}></i>
-                                        <div hidden={questions.length <= 2}>
+                    <div className={css.createQuestionButton}>
+                        <i className="fa-solid fa-square-plus fa-fade" onClick={() => setModalVisible(true)}></i>
+                    </div>
 
-                                            <i className="fa-solid fa-trash-can"
-                                               onClick={() => delQuestion(id, question.id)}></i>
-                                        </div>
-                                    </div>
-                                    {question.answers.map((answer, index) =>
-                                        <div className={css.choseInputWrapper} key={answer.id}>
-                                            <FormInput name={`${question.id}_${answer.id}`}
-                                                       register={register} type={'radio'}/>
-                                            <div className={css.editQuizItemQuestion}>
-                                                <h4> {index + 1}) {answer.answer_text}</h4>
-                                                <i className="fa-solid fa-pen"
-                                                   onClick={() => editQuiz({
-                                                       answer: {
-                                                           answer_text: answer.answer_text,
-                                                           is_correct: answer.is_correct
-                                                       }, question_id: question.id, answer_id: answer.id
-                                                   })}></i>
-                                                <div hidden={question.answers.length <= 2}>
-                                                    <i className={`fa-solid fa-trash-can `}
-                                                       onClick={() => delAnswer(id, answer.id)}
-                                                    ></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </li>
-                            </ol>
+                    <form onSubmit={handleSubmit(quizVotting)} className={css.quizForm}>
+                        {questions.map(question => <QuizQuestion key={question.id} question={question}
+                                                                 editQuiz={editQuiz} delQuestion={delQuestion}
+                                                                 quiz_id={id} questionsLength={questions.length}
+                                                                 delAnswer={delAnswer} register={register}
+                                                                 setModalVisible={setModalVisible}/>
                         )}
 
                         <div className={css.buttonSubmitWrapper}>
@@ -154,12 +145,24 @@ const QuizDetail: FC<IProps> = ({selected_quiz}) => {
                 </div>
             }
 
+
             {quizItemForUpdate &&
                 <UniversalModalWindow visible={isModalVisible} onClose={() => setModalVisible(false)}>
                     <QuizForUpdate onClose={() => setModalVisible(false)} setQuizItemForUpdate={setQuizItemForUpdate}
                                    itemForUpdate={quizItemForUpdate} quiz_id={id}/>
                 </UniversalModalWindow>
             }
+            {question_id_for_add_answer &&
+                <UniversalModalWindow visible={isModalVisible} onClose={() => setModalVisible(false)}>
+                    <QuizAnswerCreateForm onClose={() => setModalVisible(false)}/>
+                </UniversalModalWindow>
+            }
+            {(!quizItemForUpdate && !question_id_for_add_answer) &&
+                <UniversalModalWindow visible={isModalVisible} onClose={() => setModalVisible(false)}>
+                    <QuizQuestionCreateForm questions={questions} quiz_id={id}
+                                            onClose={() => setModalVisible(false)}/>
+                </UniversalModalWindow>}
+
 
         </div>
     );

@@ -5,7 +5,8 @@ import {
     IQuizAnswerForUpdate,
     IQuizCreateRequest,
     IQuizForUpdate,
-    IQuizFullResponse,
+    IQuizFullResponse, IQuizQuestionAnswerCreateRequest,
+    IQuizQuestionCreateRequest,
     IQuizQuestionForUpdate,
     IQuizResponse,
     IVoteDataRequest,
@@ -21,6 +22,7 @@ interface IState {
     company_quizzes: IQuizResponse[],
     selected_quiz: IQuizFullResponse | null,
     user_current_quiz_vote: IVoteResultResponse | null,
+    question_id_for_add_answer: number | null
 }
 
 const initialState: IState = {
@@ -29,7 +31,8 @@ const initialState: IState = {
     total_page: 1,
     company_quizzes: [],
     selected_quiz: null,
-    user_current_quiz_vote: null
+    user_current_quiz_vote: null,
+    question_id_for_add_answer: null
 }
 
 const getCompanyQuizzes = createAsyncThunk<IPagination<IQuizResponse[]>, { company_id: number, query: IRequest }>(
@@ -86,6 +89,31 @@ const createQuiz = createAsyncThunk<void, IQuizCreateRequest>(
         }
     }
 )
+const createQuizQuestion = createAsyncThunk<void, { question_data: IQuizQuestionCreateRequest, quiz_id:number }>(
+    'quizSlice/createQuizQuestion',
+    async ({question_data, quiz_id}, {rejectWithValue}) => {
+        try {
+            await quizService.createQuizQuestion(quiz_id, question_data);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
+
+const createAnswer = createAsyncThunk<void, { answer_data: IQuizQuestionAnswerCreateRequest, question_id:number }>(
+    'quizSlice/createAnswer',
+    async ({answer_data, question_id}, {rejectWithValue}) => {
+        try {
+            await quizService.createQuizAnswer(question_id, answer_data);
+            actions.set_question_id(null)
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data);
+        }
+    }
+)
+
 
 const deleteQuiz = createAsyncThunk<void, number>(
     'quizSlice/deleteQuiz',
@@ -166,6 +194,9 @@ const quizSlice = createSlice({
         reset_current_vote: (state) => {
             state.user_current_quiz_vote = null;
         },
+        set_question_id: (state, action) => {
+            state.question_id_for_add_answer = action.payload;
+        },
 
     },
     extraReducers: builder => {
@@ -206,7 +237,9 @@ const quizActions = {
     updateQuizQuestion,
     updateQuizAnswer,
     deleteQuizAnswer,
-    deleteQuizQuestion
+    deleteQuizQuestion,
+    createQuizQuestion,
+    createAnswer
 };
 
 export {quizActions, quizReducer};

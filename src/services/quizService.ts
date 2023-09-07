@@ -5,6 +5,8 @@ import {mainUrls} from '../config';
 import {IPagination} from '../interfaces';
 import {IRes} from '../types';
 import {IQuizAnswerForUpdate, IQuizCreateRequest, IQuizForUpdate, IQuizFullResponse,
+    IQuizQuestionAnswerCreateRequest,
+    IQuizQuestionCreateRequest,
     IQuizQuestionForUpdate, IQuizResponse, IVoteDataRequest, IVoteResultResponse} from '../interfaces/quiz.interface';
 
 
@@ -40,6 +42,12 @@ class QuizService {
     }
     deleteQuestionById(question_id: number, quiz_id:number): IRes<void > {
         return apiService.delete(mainUrls.quizzes.deleteQuestion(question_id, quiz_id))
+    }
+    createQuizQuestion(quiz_id:number, question_data:IQuizQuestionCreateRequest): IRes<void> {
+        return apiService.post(mainUrls.quizzes.createQuestion(quiz_id), question_data)
+    }
+    createQuizAnswer(question_id:number, answer_data:IQuizQuestionAnswerCreateRequest): IRes<void> {
+        return apiService.post(mainUrls.quizzes.createAnswer(question_id), answer_data)
     }
 }
 

@@ -1,0 +1,50 @@
+.choseInputWrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.editQuizItemQuestion {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.editQuizItemQuestion i {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.editQuizItemQuestion h2, .editQuizItemQuestion h3 {
+    margin: 5px;
+}
+
+
+.editQuizItemQuestion {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    gap: 10px;
+    padding: 5px;
+}
+.updateIcon {
+    color: green;
+    cursor: pointer;
+}
+
+.updateIcon:hover {
+
+    font-size: 18px;
+}
+
+.delIcon:hover {
+    font-size: 18px;
+}
+
+.delIcon {
+    color: red;
+    cursor: pointer;
+}

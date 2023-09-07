@@ -66,6 +66,7 @@ const App: FC = () => {
                         <Route path={'company_requests'} element={<CompanyRequestPage/>}/>
                         <Route path={'company_admins'} element={<CompanyAdminsPage/>}/>
                         <Route path={'company_quizzes'} element={<CompanyQuizzesPage/>}>
+                            <Route path={''} index element={<CompanyQuizzesPage/>}/>
                             <Route path={':quiz_id'} element={<QuizDetailPage/>}/>
                         </Route>
 

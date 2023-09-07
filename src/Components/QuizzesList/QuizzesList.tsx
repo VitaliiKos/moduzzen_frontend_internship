@@ -31,7 +31,7 @@ const QuizzesList: FC<IProps> = ({quizzes, total_item, total_page}) => {
     useEffect(() => {
         dispatch(companyActions.getUserRole({id: Number(id)}))
 
-    }, [dispatch, id]);
+    }, [dispatch, id, query, pageQueryParam]);
 
     return (
         <>

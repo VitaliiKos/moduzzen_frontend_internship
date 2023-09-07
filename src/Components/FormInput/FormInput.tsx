@@ -6,6 +6,8 @@ import {
     IQuizCreateRequest,
     IQuizForUpdate,
     IQuizFullResponse,
+    IQuizQuestionAnswerCreateRequest,
+    IQuizQuestionCreateRequest,
     IQuizQuestionForUpdate
 } from '../../interfaces/quiz.interface';
 
@@ -15,7 +17,7 @@ interface IProps {
     type?: string,
     placeholder?: string,
     checked?: boolean,
-    register: UseFormRegister<ILoginUser & FieldValues> | UseFormRegister<IUser & FieldValues> | UseFormRegister<ICompany & FieldValues> | UseFormRegister<IQuizFullResponse & FieldValues> | UseFormRegister<IQuizCreateRequest & FieldValues> | UseFormRegister<IQuizForUpdate & FieldValues> | UseFormRegister<IQuizQuestionForUpdate & FieldValues> | UseFormRegister<IQuizAnswerForUpdate & FieldValues>,
+    register: UseFormRegister<ILoginUser & FieldValues> | UseFormRegister<IUser & FieldValues> | UseFormRegister<ICompany & FieldValues> | UseFormRegister<IQuizFullResponse & FieldValues> | UseFormRegister<IQuizCreateRequest & FieldValues> | UseFormRegister<IQuizForUpdate & FieldValues> | UseFormRegister<IQuizQuestionForUpdate & FieldValues> | UseFormRegister<IQuizAnswerForUpdate & FieldValues> | UseFormRegister<IQuizQuestionCreateRequest & FieldValues> | UseFormRegister<IQuizQuestionAnswerCreateRequest & FieldValues>,
 }
 
 const FormInput: FC<IProps> = ({name = '', type = 'text', register, placeholder = '', checked}) => {

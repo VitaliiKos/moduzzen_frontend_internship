@@ -7,13 +7,16 @@ import {QuizzesList} from '../../Components/QuizzesList/QuizzesList';
 const CompanyQuizzesPage: FC = () => {
     const {id} = useParams();
     const dispatch = useAppDispatch();
+
     const {company_quizzes, total_page, total_item, error} = useAppSelector(state => state.quizReducer);
     const {skip} = useAppSelector(state => state.mainReducer);
     const [query] = useSearchParams({page: '1'});
+    const pageQueryParam = query.get('page');
+
 
     useEffect(() => {
         dispatch(quizActions.getCompanyQuizzes({company_id: Number(id), query: {skip}}));
-    }, [dispatch, query, id, skip]);
+    }, [dispatch, query, id, skip,pageQueryParam]);
 
     return (
         <>

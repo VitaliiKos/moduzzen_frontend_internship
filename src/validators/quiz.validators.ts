@@ -15,7 +15,6 @@ export const QuizValidator = Joi.object({
         'number.max': 'frequency_in_days must be less than 7',
     }),
 
-
     questions_data: Joi.array()
         .min(2)
         .items(
@@ -39,21 +38,16 @@ export const QuizValidator = Joi.object({
                         })
                     )
                     .custom((answers, helpers) => {
-                        const trueCount = answers.filter((answer: { is_correct: boolean }) => answer.is_correct === true).length;
+                        const trueCount = answers.filter((answer: {
+                            is_correct: boolean
+                        }) => answer.is_correct === true).length;
                         if (trueCount !== 1) {
                             return helpers.message(
                                 {custom: 'At least one answer must be marked as correct.',}
-                                // 'Exactly one answer must be marked as correct.'
                             );
                         }
                         return answers;
                     }),
-                    // .custom((answers, helpers) => {
-                    //     if (!answers.some((answer: { is_correct: boolean }) => answer.is_correct === true)) {
-                    //         return helpers.message({custom: 'At least one answer must be marked as correct.',});
-                    //     }
-                    //     return answers;
-                    // }),
             })
         )
         .messages({

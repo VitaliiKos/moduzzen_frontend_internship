@@ -3,12 +3,12 @@ import {useForm, SubmitHandler} from 'react-hook-form';
 
 import {IQuizCreateRequest, IQuizQuestionCreateRequest} from '../../interfaces/quiz.interface';
 import {FormInput} from '..';
-import css from './quizForm.module.css';
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {quizActions} from '../../Store/slice';
 import {joiResolver} from '@hookform/resolvers/joi';
 import {QuizValidator} from '../../validators';
+import {QuizQuestionCreate} from '../QuizQuestionCreate/QuizQuestionCreate';
 
 
 interface IProps {
@@ -104,21 +104,8 @@ const QuizForm: FC<IProps> = ({onClose}) => {
                 <FormInput name={'frequency_in_days'} type={'number'} register={register}/>
 
                 {quiz.questions_data.map((question, questionIndex) => (
-                        <div key={questionIndex} className={css.questionCard}>
-                            <FormInput name={`questions_data[${questionIndex}].question_text`} register={register}
-                                       placeholder={`Question ${questionIndex + 1}`}/>
-                            {question.answers.map((answer, answerIndex) => (
-                                <div key={answerIndex} className={css.answerBlock}>
-                                    <FormInput name={`questions_data[${questionIndex}].answers[${answerIndex}].answer_text`}
-                                               register={register} placeholder={`Answer ${answerIndex + 1}`}/>
-                                    <FormInput name={`questions_data[${questionIndex}].answers[${answerIndex}].is_correct`}
-                                               register={register} placeholder={`true / false`} type={'checkBox'}/>
-                                </div>
-                            ))}
-                            <button type="button" onClick={() => addAnswer(questionIndex)}>
-                                Add Answer
-                            </button>
-                        </div>
+                        <QuizQuestionCreate key={questionIndex} register={register} questionIndex={questionIndex}
+                                            addAnswer={addAnswer} question={question}/>
                     )
                 )}
 

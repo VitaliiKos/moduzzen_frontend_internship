@@ -66,7 +66,6 @@ export interface IQuizCreateRequest {
 }
 
 export interface IQuizForUpdate {
-    // id?:number
     title?: string
     description?: string
     frequency_in_days?: number

@@ -16,9 +16,6 @@ const Quiz: FC<IProps> = ({quiz}) => {
     const {id, description, title} = quiz
     const dispatch = useAppDispatch();
     const [isModalVisible, setModalVisible] = useState<boolean>(false);
-    const deleteQuiz = async () => {
-        setModalVisible(true);
-    };
     const handleConfirmation = async () => {
         await dispatch(quizActions.deleteQuiz(id));
 
@@ -29,8 +26,6 @@ const Quiz: FC<IProps> = ({quiz}) => {
         <div className={css.container}>
 
             <div className={css.card}>
-                {/*<button className={css.modal_update} onClick={() => deleteQuiz()}> U</button>*/}
-                <button className={css.modal_close} onClick={() => deleteQuiz()}> X</button>
 
                 <UniversalModalWindow visible={isModalVisible} onClose={() => setModalVisible(false)}>
                     <ActionConfirmation onClose={() => setModalVisible(false)}
