@@ -1,0 +1,13 @@
+.QuizListWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.quizAction{
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+}

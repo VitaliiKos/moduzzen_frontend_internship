@@ -16,3 +16,5 @@ export * from './MyRequestPage/MyRequestPage';
 export * from './CompanyRequestPage/CompanyRequestPage';
 export * from './FindCompany/FindCompany';
 export * from './CompanyAdminsPage/CompanyAdminsPage';
+export * from './CompanyQuizzesPage/CompanyQuizzesPage';
+export * from './QuizDetailPage/QuizDetailPage';

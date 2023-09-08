@@ -7,6 +7,7 @@ const healthCheck = '/';
 const users = '/users';
 const company = '/companies/company';
 const invitation = '/invitation';
+const quizzes = '/quizzes/quiz';
 
 const mainUrls = {
     auth: {
@@ -48,6 +49,21 @@ const mainUrls = {
         fired_from_the_company: (company_id: number, user_id: number) => `${invitation}/${company_id}/dismiss_employee/${user_id}`,
         leave_company: (company_id: number) => `${invitation}/${company_id}/leave_company`,
         admins: (company_id: number) => `${invitation}/action/${company_id}/get_list_of_admins`,
+
+    },
+    quizzes: {
+        quizes_by_company: (company_id: number) => `${quizzes}/company/${company_id}`,
+        byId: (quiz_id: number): string => `${quizzes}/${quiz_id}`,
+        send_vote: (quiz_id: number, company_id: number) => `${quizzes}/company/${company_id}/${quiz_id}/vote`,
+        createQuiz: () => `${quizzes}`,
+        deleteQuiz: (quiz_id: number) => `${quizzes}/${quiz_id}`,
+        updateQuiz: (quiz_id: number) => `${quizzes}/${quiz_id}`,
+        updateQuestion: (question_id: number) => `${quizzes}/question/${question_id}`,
+        updateAnswer: (answer_id: number, question_id:number) => `${quizzes}/question/${question_id}/answer/${answer_id}`,
+        deleteAnswer: (answer_id: number, quiz_id:number) => `${quizzes}/question/${quiz_id}/answer/${answer_id}`,
+        deleteQuestion: (question_id: number, quiz_id:number) => `${quizzes}/${quiz_id}/question/${question_id}`,
+        createQuestion: (quiz_id:number) => `${quizzes}/${quiz_id}/question/`,
+        createAnswer: (question_id:number) => `${quizzes}/question/${question_id}/answer`,
 
     },
     healthCheck: {

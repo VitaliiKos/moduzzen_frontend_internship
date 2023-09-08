@@ -11,11 +11,11 @@ interface IProps {
     companies: ICompany[] | IMyCompany[],
     total_item: number,
     total_page: number,
-    searc_status: boolean
+    search_status: boolean
 
 }
 
-const CompanyList: FC<IProps> = ({companies, total_item, total_page, searc_status}) => {
+const CompanyList: FC<IProps> = ({companies, total_item, total_page, search_status}) => {
     const dispatch = useAppDispatch();
 
     const [query] = useSearchParams({page: '1'});
@@ -37,7 +37,7 @@ const CompanyList: FC<IProps> = ({companies, total_item, total_page, searc_statu
             </div>
             <div className={css.companyList}>
                 {
-                    companies.map(company => <Company key={company.id} company={company} searc_status={searc_status}/>)
+                    companies.map(company => <Company key={company.id} company={company} search_status={search_status}/>)
                 }
             </div>
         </div>

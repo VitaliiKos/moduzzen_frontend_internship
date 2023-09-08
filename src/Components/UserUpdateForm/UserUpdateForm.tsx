@@ -44,7 +44,7 @@ const UserUpdateForm: FC = () => {
     return (
         <>
             <div onClick={() => dispatch(mainAction.setUserForUpdate(null))}>
-                <ButtonNavigate navigate_params={'/profile'}/>
+                <ButtonNavigate navigate_params={'/profile'} button_title={'X'}/>
             </div>
             <form onSubmit={handleSubmit(update)}>
                 <div className={css.inputWrapper}>

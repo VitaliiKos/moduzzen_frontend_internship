@@ -1,0 +1,159 @@
+.quizDetailPage {
+    position: absolute;
+    box-sizing: border-box;
+    top: 80px;
+    left: 5vw;
+    border-radius: 15px;
+    border: 2px solid silver;
+    background-color: rgba(232, 233, 234, 0.94);
+    width: fit-content;
+    z-index: 4;
+}
+
+.quizForm {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.buttonSubmitWrapper {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+.buttonSubmit {
+    width: 60%;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, #cedce7 0%, #596a72 100%);
+    box-sizing: border-box;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.buttonSubmit:hover {
+    background: linear-gradient(to bottom, #596a72 100%, #cedce7 0%);
+    color: snow;
+
+}
+
+.quizWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    min-height: 75vh;
+}
+
+.quizWrapper h2 {
+    margin: 25px 0;
+    font: 14px Georgia, Serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.quizWrapper input {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.quizWrapper ol {
+    width: 19%;
+    margin: 0 0 10px 5px;
+}
+
+.quizWrapper ol li {
+    margin: 0 0 5px 0;
+    list-style-type: none;
+}
+
+.quizWrapper ol li div {
+    padding: 4px 0;
+}
+
+.quizWrapper h3 {
+    font-size: 17px;
+    margin: 0 0 1px 0;
+    color: #666;
+}
+
+#results {
+    font: 44px Georgia, Serif;
+}
+
+.editQuizItem {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.editQuizItem i {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.editQuizItem h2, .editQuizItem h3 {
+    margin: 5px;
+}
+
+
+.quizTitleBlock {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+ol > li > div {
+    background-color: silver;
+}
+
+ol, li {
+    box-sizing: border-box;
+    padding: 5px;
+    margin: 5px;
+}
+
+i .hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+.ActionIcon {
+    display: flex;
+    gap: 10px;
+    box-sizing: border-box;
+    min-height: 22px;
+}
+
+.updateIcon {
+    color: green;
+    cursor: pointer;
+}
+
+.updateIcon:hover {
+
+    font-size: 18px;
+}
+
+.delIcon:hover {
+    font-size: 18px;
+}
+
+.delIcon {
+    color: red;
+    cursor: pointer;
+}
+
+.createQuestionButton {
+    display: flex;
+    justify-content: flex-end;
+    color: #32b341;
+    font-size: 32px;
+    box-sizing: border-box;
+    padding-right: 50px;
+}

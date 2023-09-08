@@ -1,6 +1,6 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 
-import {authReducer, companyActivitiesReducer, companyReducer, mainReducer, } from "./slice";
+import {authReducer, companyActivitiesReducer, companyReducer, mainReducer, quizReducer, } from "./slice";
 
 
 const rootReducer = combineReducers({
@@ -8,6 +8,7 @@ const rootReducer = combineReducers({
     authReducer,
     companyReducer,
     companyActivitiesReducer,
+    quizReducer,
 })
 
 export const mainStore = () => configureStore({

@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useState} from 'react';
 import Switch from '@mui/material/Switch';
 import {useAppDispatch} from '../../hooks';
 import {companyActions} from '../../Store/slice';

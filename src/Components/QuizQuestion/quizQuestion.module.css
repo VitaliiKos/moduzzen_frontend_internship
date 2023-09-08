@@ -1,0 +1,55 @@
+.quizQuestion {
+    width: 15%;
+}
+
+.editQuizItemQuestion {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.editQuizItemQuestion i {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.editQuizItemQuestion h2, .editQuizItemQuestion h3 {
+    margin: 5px;
+}
+
+
+.editQuizItemQuestion {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    gap: 10px;
+    padding: 5px;
+}
+
+.questionAction {
+    display: flex;
+    gap: 10px;
+    right: 0;
+}
+.updateIcon {
+    color: green;
+    cursor: pointer;
+}
+
+.updateIcon:hover {
+
+    font-size: 18px;
+}
+
+.delIcon:hover {
+    font-size: 18px;
+}
+
+.delIcon {
+    color: red;
+    cursor: pointer;
+}

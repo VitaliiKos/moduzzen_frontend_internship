@@ -19,7 +19,7 @@ const MyListCompanyPage: FC = () => {
 
     return (
         <div className={css.myCompanyListWrapper}>
-            <CompanyList companies={myCompanies} total_page={total_page} total_item={total_item} searc_status={false}/>
+            <CompanyList companies={myCompanies} total_page={total_page} total_item={total_item} search_status={false}/>
             <div>
                 <button onClick={() => setModalVisible(true)}>Create new company</button>
             </div>

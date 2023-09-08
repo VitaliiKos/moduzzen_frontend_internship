@@ -33,6 +33,9 @@ const CompanyActions: FC<IProps> = ({company_role, company_id}) => {
     const show_admins = async (company_id: number) => {
         navigate(`/profile/my_company/${company_id}/company_admins`)
     }
+    const show_quizzes = async (company_id: number) => {
+        navigate(`/profile/my_company/${company_id}/company_quizzes`)
+    }
 
     switch (company_role) {
         case 'Owner':
@@ -43,18 +46,25 @@ const CompanyActions: FC<IProps> = ({company_role, company_id}) => {
                     <button onClick={() => show_invites(company_id)}>Show Invites</button>
                     <button onClick={() => show_requests(company_id)}>Show requests</button>
                     <button onClick={() => show_admins(company_id)}>Show admins</button>
+                    <button onClick={() => show_quizzes(company_id)}>Show quizzes</button>
                 </div>
             );
-        case 'Candidate':
-            return null
-
+        case 'Admin':
+            return (
+                <div>
+                    <button onClick={() => leave_company(company_id)}>Leave company</button>
+                    <button onClick={() => show_quizzes(company_id)}>Show quizzes</button>
+                </div>
+            );
         case 'Member':
             return (
                 <div>
                     <button onClick={() => leave_company(company_id)}>Leave company</button>
-
+                    <button onClick={() => show_quizzes(company_id)}>Show quizzes</button>
                 </div>
             );
+        case 'Candidate':
+            return null
         default:
             return null
     }
