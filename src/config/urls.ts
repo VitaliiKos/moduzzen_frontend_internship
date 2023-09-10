@@ -8,6 +8,8 @@ const users = '/users';
 const company = '/companies/company';
 const invitation = '/invitation';
 const quizzes = '/quizzes/quiz';
+const analytics = '/analytics';
+const notification = '/notification';
 
 const mainUrls = {
     auth: {
@@ -59,13 +61,21 @@ const mainUrls = {
         deleteQuiz: (quiz_id: number) => `${quizzes}/${quiz_id}`,
         updateQuiz: (quiz_id: number) => `${quizzes}/${quiz_id}`,
         updateQuestion: (question_id: number) => `${quizzes}/question/${question_id}`,
-        updateAnswer: (answer_id: number, question_id:number) => `${quizzes}/question/${question_id}/answer/${answer_id}`,
-        deleteAnswer: (answer_id: number, quiz_id:number) => `${quizzes}/question/${quiz_id}/answer/${answer_id}`,
-        deleteQuestion: (question_id: number, quiz_id:number) => `${quizzes}/${quiz_id}/question/${question_id}`,
-        createQuestion: (quiz_id:number) => `${quizzes}/${quiz_id}/question/`,
-        createAnswer: (question_id:number) => `${quizzes}/question/${question_id}/answer`,
+        updateAnswer: (answer_id: number, question_id: number) => `${quizzes}/question/${question_id}/answer/${answer_id}`,
+        deleteAnswer: (answer_id: number, quiz_id: number) => `${quizzes}/question/${quiz_id}/answer/${answer_id}`,
+        deleteQuestion: (question_id: number, quiz_id: number) => `${quizzes}/${quiz_id}/question/${question_id}`,
+        createQuestion: (quiz_id: number) => `${quizzes}/${quiz_id}/question/`,
+        createAnswer: (question_id: number) => `${quizzes}/question/${question_id}/answer`,
 
     },
+    analytics: {
+        getUserSystemRating: (user_id: number) => `${analytics}/user/${user_id}/user_system_rating`,
+    },
+    notifications: {
+        getAllMyNotification: `${notification}/my_notifications`,
+        readNotification: (notif_id: number): string => `${notification}/my_notifications/${notif_id}`,
+    },
+
     healthCheck: {
         healthCheck
     },

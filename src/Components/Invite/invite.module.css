@@ -1,8 +1,9 @@
-.inviteWrapper{
+.inviteWrapper {
     display: flex;
     flex-direction: column;
     width: 18%;
 }
+
 .nft {
     user-select: none;
     width: 100%;
@@ -26,6 +27,7 @@
 .main h3 {
     margin: 5px;
     font-size: 14px;
+    color: #adc99f;
 }
 
 .nft .main {
@@ -121,6 +123,7 @@
 }
 
 .tokenInfoButton button {
+    cursor: pointer;
     box-sizing: border-box;
     padding: 4px 7px;
     border-radius: 10px;
@@ -129,4 +132,8 @@
     font-weight: 400;
     max-width: 47%;
     background: linear-gradient(to bottom, #d8e0de 0%, #aebfbc 22%, #99afab 33%, #8ea6a2 50%, #829d98 67%, #4e5c5a 82%, #0e0e0e 100%);
+}
+
+.tokenInfoButton button:hover {
+    color: #fffb00;
 }

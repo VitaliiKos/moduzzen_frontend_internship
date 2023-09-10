@@ -12,3 +12,4 @@ export * from './user.inteface';
 export * from './company.interface';
 export * from './companyMembers.interface';
 export * from './invites.interface';
+export * from './analytics.interface';
