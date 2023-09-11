@@ -1,6 +1,14 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 
-import {authReducer, companyActivitiesReducer, companyReducer, mainReducer, quizReducer, } from "./slice";
+import {
+    analyticsReducer,
+    authReducer,
+    companyActivitiesReducer,
+    companyReducer,
+    mainReducer,
+    quizReducer,
+} from "./slice";
+import {notyficationsReducer} from "./slice/notyficationsSlice";
 
 
 const rootReducer = combineReducers({
@@ -9,10 +17,12 @@ const rootReducer = combineReducers({
     companyReducer,
     companyActivitiesReducer,
     quizReducer,
+    analyticsReducer,
+    notyficationsReducer,
 })
 
 export const mainStore = () => configureStore({
-    reducer:rootReducer
+    reducer: rootReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

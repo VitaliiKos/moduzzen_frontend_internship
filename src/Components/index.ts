@@ -40,3 +40,8 @@ export * from './QuizQuestionCreate/QuizQuestionCreate';
 export * from './QuizAnswerCreate/QuizAnswerCreate';
 export * from './QuizQuestionCreateForm/QuizQuestionCreateForm';
 export * from './QuizAnswerCreateForm/QuizAnswerCreateForm';
+export * from './RatingStars/RatingStars';
+export * from './NotificationsBadge/NotificationsBadge';
+export * from './UserNotificatuions/UserNotificatuions';
+export * from './NotificationsList/NotificationsList';
+export * from './NotificationMsg/NotificationMsg';

@@ -4,3 +4,4 @@ export * from './auth.service';
 export * from './companyService';
 export * from './companyActivitiesService';
 export * from './quizService';
+export * from './analyticsService';

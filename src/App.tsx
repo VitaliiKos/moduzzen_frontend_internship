@@ -27,6 +27,7 @@ import {
 } from './Pages';
 import {RouterEndpoints} from './routes';
 import {CompanyInvitationsPage} from './Pages/CompanyInvitationsPage/CompanyInvitationsPage';
+import {UserNotificatuions} from './Components';
 
 const App: FC = () => {
     return (
@@ -55,8 +56,12 @@ const App: FC = () => {
 
                     <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}`} element={
                         <RequiredAuth><MyListCompanyPage/></RequiredAuth>}/>
+
                     <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.findCompany}`} element={
                         <RequiredAuth><FindCompany/></RequiredAuth>}/>
+
+                    <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.notification}`} element={
+                        <RequiredAuth><UserNotificatuions/></RequiredAuth>}/>
 
                     <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.myCompanies}/${RouterEndpoints.id}`}
                            element={<CompanyProfilePage/>}>
@@ -66,7 +71,7 @@ const App: FC = () => {
                         <Route path={'company_requests'} element={<CompanyRequestPage/>}/>
                         <Route path={'company_admins'} element={<CompanyAdminsPage/>}/>
                         <Route path={'company_quizzes'} element={<CompanyQuizzesPage/>}>
-                            <Route path={''} index element={<CompanyQuizzesPage/>}/>
+                            {/*<Route path={''} index element={<CompanyQuizzesPage/>}/>*/}
                             <Route path={':quiz_id'} element={<QuizDetailPage/>}/>
                         </Route>
 

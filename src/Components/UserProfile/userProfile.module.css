@@ -40,3 +40,10 @@
     touch-action: manipulation;
     cursor: pointer;
 }
+.userSystemRating{
+    display: flex;
+    gap: 10px;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+}
