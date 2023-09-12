@@ -70,6 +70,11 @@ const mainUrls = {
     },
     analytics: {
         getUserSystemRating: (user_id: number) => `${analytics}/user/${user_id}/user_system_rating`,
+        getUserCompanyRating: (user_id: number, company_id: number) => `${analytics}/user/${user_id}/user_average/company/${company_id}`,
+        listOfAllAvailableQuizzes: `${analytics}/user/quizzes`,
+        averageInAllQuizzesInAllCompanies: (user_id: number) => `${analytics}/user/${user_id}/companies/quizzes`,
+        membersLastAttempt: (company_id: number) => `${analytics}/company/${company_id}/members/last_attempt`,
+        averageAllMembersForCurrentQuiz: (company_id: number, quiz_id: number) => `${analytics}/company/${company_id}/users/quizzes/${quiz_id}`,
     },
     notifications: {
         getAllMyNotification: `${notification}/my_notifications`,

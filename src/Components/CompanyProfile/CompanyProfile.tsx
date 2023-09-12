@@ -3,9 +3,15 @@ import {useNavigate} from 'react-router-dom';
 
 import {ICompany} from '../../interfaces';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {companyActions} from '../../Store/slice';
+import {analyticsActions, companyActions} from '../../Store/slice';
 import {RouterEndpoints} from '../../routes';
-import {ActionConfirmation, CompanyCreateForm, SwitchComponent, UniversalModalWindow} from '../../Components';
+import {
+    ActionConfirmation,
+    CompanyCreateForm,
+    RatingStars,
+    SwitchComponent,
+    UniversalModalWindow
+} from '../../Components';
 
 interface IProps {
     selected_company: ICompany
@@ -14,6 +20,9 @@ interface IProps {
 const CompanyProfile: FC<IProps> = ({selected_company}) => {
     const {id, name, email, status, phone} = selected_company;
     const {company_role} = useAppSelector(state => state.companyReducer);
+    const {me} = useAppSelector(state => state.authReducer);
+    const {userCompanyrating} = useAppSelector(state => state.analyticsReducer);
+
     const [isModalVisible, setModalVisible] = useState<boolean>(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [selectedAction, setSelectedAction] = useState<string | null>(null);
@@ -53,6 +62,10 @@ const CompanyProfile: FC<IProps> = ({selected_company}) => {
 
     }, [isModalVisible, showConfirmation]);
 
+    useEffect(() => {
+        dispatch(analyticsActions.userRatingInCompany({user_id: Number(me!.id), company_id: Number(id)}))
+    }, [me,id, dispatch]);
+
 
     return (
         <div>
@@ -64,13 +77,24 @@ const CompanyProfile: FC<IProps> = ({selected_company}) => {
             <div>
                 <h4>Active status: {status ? 'Visable' : 'Invisable'}</h4>
             </div>
+            <div>
+                {userCompanyrating &&
+                    <>
+                        <div><em>{userCompanyrating.average_score ?? 0}/100</em></div>
+                        <RatingStars
+                            ratingScore={userCompanyrating.average_score ? userCompanyrating.average_score : 0}
+                            precision={0.2}
+                            countOfstars={10}/>
+                    </>
+                }
+            </div>
+
             <h4>Your role: {company_role}</h4>
             {
 
                 company_role!.toLowerCase() === 'owner' &&
                 <div>
                     <SwitchComponent company_status={selected_company.status!} company_id={Number(id)}/>
-
                     <button onClick={() => update(selected_company)}>Update</button>
                     <button onClick={() => deleteCompany()}>Delete</button>
                 </div>
@@ -87,7 +111,8 @@ const CompanyProfile: FC<IProps> = ({selected_company}) => {
 
 
         </div>
-    );
+    )
+        ;
 };
 
 export {CompanyProfile};

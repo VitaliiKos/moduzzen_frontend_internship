@@ -23,7 +23,8 @@ import {
     FindCompany,
     CompanyAdminsPage,
     CompanyQuizzesPage,
-    QuizDetailPage
+    QuizDetailPage,
+    AvaliableQuizzesPage
 } from './Pages';
 import {RouterEndpoints} from './routes';
 import {CompanyInvitationsPage} from './Pages/CompanyInvitationsPage/CompanyInvitationsPage';
@@ -59,6 +60,9 @@ const App: FC = () => {
 
                     <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.findCompany}`} element={
                         <RequiredAuth><FindCompany/></RequiredAuth>}/>
+
+                    <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.avaliable_quizzes}`} element={
+                        <RequiredAuth><AvaliableQuizzesPage/></RequiredAuth>}/>
 
                     <Route path={`${RouterEndpoints.profile}/${RouterEndpoints.notification}`} element={
                         <RequiredAuth><UserNotificatuions/></RequiredAuth>}/>

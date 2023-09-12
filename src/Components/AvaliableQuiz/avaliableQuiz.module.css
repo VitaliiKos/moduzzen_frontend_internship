@@ -1,0 +1,20 @@
+.avaliableQuizWrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    margin: 5px;
+    box-sizing: border-box;
+    padding: 5px;
+    width: 55%;
+    border: 2px solid #54ce57;
+    background-color: silver;
+}
+
+.avaliableQuizWrapper h3 {
+    margin: 5px;
+}
+
+.avaliableQuizWrapper:hover {
+    background-color: cornflowerblue;
+    cursor: pointer;
+}
