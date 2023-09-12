@@ -3,9 +3,10 @@ import {Link} from 'react-router-dom';
 
 import css from './memberActions.module.css';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {companyActivitiesActions} from '../../Store/slice';
+import {analyticsActions, companyActivitiesActions} from '../../Store/slice';
 import {UniversalModalWindow} from '../UniversalModalWindow/UniversalModalWindow';
 import {ActionConfirmation} from '../ActionConfirmation/ActionConfirmation';
+import {AnalyticsChart} from '..';
 
 interface IProps {
     user_id: number
@@ -22,6 +23,9 @@ const MemberActions: FC<IProps> = ({employee_id, company_id, role, invitation_st
     const {skip} = useAppSelector(state => state.mainReducer);
     const [isModalVisible, setModalVisible] = useState<boolean>(false);
     const [selectedAction, setSelectedAction] = useState<string | null>(null);
+    const [showModalWindow, setShowModalWindow] = useState<boolean>(false);
+    const {userlistOfAverageInAllQuizzesInAllCompanies} = useAppSelector(state => state.analyticsReducer);
+
 
     const firedFromTheCompany = async () => {
         setSelectedAction('firedFromTheCompany');
@@ -50,6 +54,21 @@ const MemberActions: FC<IProps> = ({employee_id, company_id, role, invitation_st
         setSelectedAction('adminToUser');
         setModalVisible(true);
     };
+    const showAnalitics = () => {
+        setShowModalWindow(true);
+    }
+    const uniqueLabels: string[] = Array.from(
+        new Set(
+            userlistOfAverageInAllQuizzesInAllCompanies
+                .map(item =>
+                    item.score.map(scoreItem => new Date(scoreItem.timestamp).toLocaleDateString())
+                )
+                .flat()
+        )
+    );
+    const lineLabels = userlistOfAverageInAllQuizzesInAllCompanies.map(item => item.quiz_id);
+    const scores = userlistOfAverageInAllQuizzesInAllCompanies.map(item => item.score.map(scoreItem => scoreItem.average_score));
+
     const handleConfirmation = async () => {
         switch (selectedAction) {
             case 'firedFromTheCompany':
@@ -86,12 +105,16 @@ const MemberActions: FC<IProps> = ({employee_id, company_id, role, invitation_st
     useEffect(() => {
 
     }, [isModalVisible]);
+    useEffect(() => {
+        dispatch(analyticsActions.listOfAverageInAllQuizzesInAllCompanies({user_id: Number(user_id)}))
+    }, [user_id, dispatch]);
+
 
     switch (role) {
         case 'Owner':
             return (
                 <div className={css.buttonWrapper}>
-                    <Link to='#' >Some actions</Link>
+                    <Link to='#'>Some actions</Link>
                     <Link to='#'>Some Action</Link>
                     <Link to='#'>Some actions</Link>
                 </div>
@@ -129,10 +152,16 @@ const MemberActions: FC<IProps> = ({employee_id, company_id, role, invitation_st
                 <div className={css.buttonWrapper}>
                     <Link to='#' onClick={() => userToAdmin()}>To admin</Link>
                     <Link to='#' onClick={() => firedFromTheCompany()}>Fired from the company</Link>
-                    <Link to='#'>Some actions</Link>
+                    <Link to='#' onClick={() => showAnalitics()}>Show analytics</Link>
                     <UniversalModalWindow visible={isModalVisible} onClose={() => setModalVisible(false)}>
                         <ActionConfirmation onClose={() => setModalVisible(false)} handleYes={handleConfirmation}/>
                     </UniversalModalWindow>
+
+                    <UniversalModalWindow visible={showModalWindow} onClose={() => setShowModalWindow(false)}>
+                        <AnalyticsChart onClose={() => setShowModalWindow(false)} uniqueLabels={uniqueLabels}
+                                        lineLabels={lineLabels} scores={scores}/>
+                    </UniversalModalWindow>
+
                 </div>
             );
         case 'Admin':
@@ -140,10 +169,16 @@ const MemberActions: FC<IProps> = ({employee_id, company_id, role, invitation_st
                 <div className={css.buttonWrapper}>
                     <Link to='#' onClick={() => adminToUser()}>Back to user</Link>
                     <Link to='#' onClick={() => firedFromTheCompany()}>Fired from the company</Link>
-                    <Link to='#'>Some actions</Link>
+                    <Link to='#' onClick={() => showAnalitics()}>Show analytics</Link>
                     <UniversalModalWindow visible={isModalVisible} onClose={() => setModalVisible(false)}>
                         <ActionConfirmation onClose={() => setModalVisible(false)} handleYes={handleConfirmation}/>
                     </UniversalModalWindow>
+                    <UniversalModalWindow visible={showModalWindow} onClose={() => setShowModalWindow(false)}>
+                        <AnalyticsChart onClose={() => setShowModalWindow(false)} uniqueLabels={uniqueLabels}
+                                        lineLabels={lineLabels} scores={scores}/>
+                    </UniversalModalWindow>
+
+
                 </div>
             );
         default:

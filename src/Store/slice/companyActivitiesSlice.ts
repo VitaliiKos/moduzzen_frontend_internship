@@ -343,7 +343,6 @@ const companyActivitiesSlice = createSlice({
 
                 state.total_item = total_item
                 state.total_page = total_page
-                state.error = null;
             })
             .addCase(getMyRequests.fulfilled, (state, action: PayloadAction<IPagination<IMYInvites[]>>) => {
                 const {data, total_item, total_page} = action.payload;
@@ -352,7 +351,6 @@ const companyActivitiesSlice = createSlice({
 
                 state.total_item = total_item
                 state.total_page = total_page
-                state.error = null;
             })
             .addCase(getCompanyAdmins.fulfilled, (state, action: PayloadAction<IPagination<IMembers[]>>) => {
                 const {data, total_item, total_page} = action.payload;
@@ -360,12 +358,10 @@ const companyActivitiesSlice = createSlice({
 
                 state.total_item = total_item;
                 state.total_page = total_page;
-                state.error = null;
 
             })
 
             .addMatcher(isFulfilled(), state => {
-                state.error = null
             })
             .addMatcher(isRejectedWithValue(), (state: IState, action) => {
                 const errorPayload = action.payload as IError;

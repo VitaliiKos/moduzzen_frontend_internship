@@ -45,3 +45,5 @@ export * from './NotificationsBadge/NotificationsBadge';
 export * from './UserNotificatuions/UserNotificatuions';
 export * from './NotificationsList/NotificationsList';
 export * from './NotificationMsg/NotificationMsg';
+export * from './AnalyticsChart/AnalyticsChart';
+export * from './AvaliableQuiz/AvaliableQuiz';

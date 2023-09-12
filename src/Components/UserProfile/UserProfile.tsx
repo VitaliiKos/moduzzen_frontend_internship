@@ -6,7 +6,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {analyticsActions, authActions, mainAction} from '../../Store/slice';
 import css from './userProfile.module.css';
 import {RouterEndpoints} from '../../routes';
-import {ActionConfirmation, RatingStars, UniversalModalWindow} from '..';
+import {ActionConfirmation, AnalyticsChart, RatingStars, UniversalModalWindow} from '..';
 
 interface IProps {
     me: IUser
@@ -15,13 +15,20 @@ interface IProps {
 const UserProfile: FC<IProps> = ({me}) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {userSystemrating} = useAppSelector(state => state.analyticsReducer);
+    const {
+        userSystemrating,
+        userlistOfAverageInAllQuizzesInAllCompanies
+    } = useAppSelector(state => state.analyticsReducer);
     const [isModalVisible, setModalVisible] = useState<boolean>(false);
+    const [showModalWindow, setShowModalWindow] = useState<boolean>(false);
     const [selectedAction, setSelectedAction] = useState<string | null>(null);
 
     const deleteProfile = () => {
         setSelectedAction('deleteProfile');
         setModalVisible(true);
+    }
+    const showAnalitics = () => {
+        setShowModalWindow(true);
     }
     const handleConfirmation = async () => {
         switch (selectedAction) {
@@ -41,8 +48,21 @@ const UserProfile: FC<IProps> = ({me}) => {
 
 
     useEffect(() => {
-        dispatch(analyticsActions.userRatingInSyster({user_id: Number(me.id)}))
+        dispatch(analyticsActions.userRatingInSystem({user_id: Number(me.id)}))
+        dispatch(analyticsActions.listOfAverageInAllQuizzesInAllCompanies({user_id: Number(me.id)}))
     }, [userSystemrating, me, dispatch, me.id]);
+
+    const uniqueLabels: string[] = Array.from(
+        new Set(
+            userlistOfAverageInAllQuizzesInAllCompanies
+                .map(item =>
+                    item.score.map(scoreItem => new Date(scoreItem.timestamp).toLocaleDateString())
+                )
+                .flat()
+        )
+    );
+    const lineLabels = userlistOfAverageInAllQuizzesInAllCompanies.map(item => item.quiz_id);
+    const scores = userlistOfAverageInAllQuizzesInAllCompanies.map(item => item.score.map(scoreItem => scoreItem.average_score));
 
 
     return (
@@ -63,9 +83,11 @@ const UserProfile: FC<IProps> = ({me}) => {
                                  countOfstars={10}/>
                 </div>
                 <div className={css.formButtonWrapper}>
+
                     <button onClick={() => dispatch(mainAction.setUserForUpdate(me))}>Update</button>
 
                     <button onClick={() => deleteProfile()}>Delete profile</button>
+                    <button onClick={() => showAnalitics()}>Show analitics</button>
 
                 </div>
                 <div className={css.userOptionsButton}>
@@ -85,6 +107,11 @@ const UserProfile: FC<IProps> = ({me}) => {
                             onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.findCompany}`)}>Find
                         Company
                     </button>
+                    <button className={css.userButtonAction}
+                            onClick={() => navigate(`/${RouterEndpoints.profile}/${RouterEndpoints.avaliable_quizzes}`)}>My
+                        avaliable quizzes
+                    </button>
+
 
                 </div>
             </div>
@@ -95,6 +122,11 @@ const UserProfile: FC<IProps> = ({me}) => {
             <UniversalModalWindow visible={isModalVisible} onClose={() => setModalVisible(false)}>
                 <ActionConfirmation onClose={() => setModalVisible(false)}
                                     handleYes={handleConfirmation}/>
+            </UniversalModalWindow>
+
+            <UniversalModalWindow visible={showModalWindow} onClose={() => setShowModalWindow(false)}>
+                <AnalyticsChart onClose={() => setShowModalWindow(false)} uniqueLabels={uniqueLabels}
+                                lineLabels={lineLabels} scores={scores}/>
             </UniversalModalWindow>
 
         </>

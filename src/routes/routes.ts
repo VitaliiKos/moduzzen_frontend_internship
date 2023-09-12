@@ -18,6 +18,7 @@ export const RouterEndpoints = {
     myInvites: "my_invites",
     myRequest: "my_request",
     findCompany: "find_company",
+    avaliable_quizzes: "avaliable_quizzes",
     notification: "notification",
 
     notFound: '*',
