@@ -32,7 +32,7 @@ const UsersList: FC<IProps> = ({users, total_page, total_item}) => {
                             selectedPage={selectedPage}
             />
             <div className={css.userListWrapper}>
-                {
+                {users &&
                     users.map(user => <User key={user.id} user={user} />)
                 }
             </div>

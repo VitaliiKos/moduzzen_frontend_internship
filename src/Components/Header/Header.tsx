@@ -18,6 +18,8 @@ const Header: FC = () => {
         if (!me && localStorage.getItem('access')) {
             dispatch(authActions.me())
 
+
+            
         }
     }, [me, dispatch])
 
